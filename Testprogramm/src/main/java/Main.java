@@ -1,10 +1,14 @@
-package main.java;
+
 
 public class Main
 {
 	int ergebnis;
 	int zahl1;
 	int zahl2;
+	
+	public Main() {
+		
+	}
 	
 	public Main(int zahl1, int zahl2)
 	{
