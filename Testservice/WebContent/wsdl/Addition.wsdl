@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservices.org" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservices.org" xmlns:intf="http://webservices.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservices.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="addiere">
+    <complexType>
+     <sequence>
+      <element name="zahl1" type="xsd:int"/>
+      <element name="zahl2" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addiereResponse">
+    <complexType>
+     <sequence>
+      <element name="addiereReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="addiereResponse">
+
+      <wsdl:part element="impl:addiereResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addiereRequest">
+
+      <wsdl:part element="impl:addiere" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Addition">
+
+      <wsdl:operation name="addiere">
+
+         <wsdl:input message="impl:addiereRequest" name="addiereRequest"/>
+
+         <wsdl:output message="impl:addiereResponse" name="addiereResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AdditionSoapBinding" type="impl:Addition">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="addiere">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addiereRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addiereResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AdditionService">
+
+      <wsdl:port binding="impl:AdditionSoapBinding" name="Addition">
+
+         <wsdlsoap:address location="http://localhost:8080/Testservice/services/Addition"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
