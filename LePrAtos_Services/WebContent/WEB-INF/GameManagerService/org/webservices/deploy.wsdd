@@ -5,17 +5,29 @@
   <service name="GameManager" provider="java:RPC" style="wrapped" use="literal">
       <parameter name="wsdlTargetNamespace" value="http://webservices.org"/>
       <parameter name="wsdlServiceElement" value="GameManagerService"/>
-      <parameter name="schemaQualified" value="http://webservices.org"/>
+      <parameter name="schemaQualified" value="http://webservices.org,http://javaclasses.org"/>
       <parameter name="wsdlServicePort" value="GameManager"/>
       <parameter name="className" value="org.webservices.GameManager"/>
       <parameter name="wsdlPortType" value="GameManager"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation xmlns:operNS="http://webservices.org" xmlns:retNS="http://webservices.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="login" qname="operNS:login" returnQName="retNS:loginReturn" returnType="rtns:string" soapAction="">
+      <operation xmlns:operNS="http://webservices.org" xmlns:retNS="http://webservices.org" xmlns:rtns="http://javaclasses.org" name="login" qname="operNS:login" returnQName="retNS:loginReturn" returnType="rtns:Player" soapAction="">
         <parameter xmlns:pns="http://webservices.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://webservices.org" xmlns:retNS="http://webservices.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="logout" qname="operNS:logout" returnQName="retNS:logoutReturn" returnType="rtns:string" soapAction="">
       </operation>
-      <parameter name="allowedMethods" value="logout login"/>
+      <operation xmlns:operNS="http://webservices.org" xmlns:retNS="http://webservices.org" xmlns:rtns="http://javaclasses.org" name="createGameLobby" qname="operNS:createGameLobby" returnQName="retNS:createGameLobbyReturn" returnType="rtns:GameLobby" soapAction="">
+        <parameter xmlns:pns="http://webservices.org" xmlns:tns="http://javaclasses.org" qname="pns:spieler" type="tns:Player"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.org" xmlns:retNS="http://webservices.org" xmlns:rtns="http://javaclasses.org" name="joinGameLobby" qname="operNS:joinGameLobby" returnQName="retNS:joinGameLobbyReturn" returnType="rtns:GameLobby" soapAction="">
+        <parameter xmlns:pns="http://webservices.org" xmlns:tns="http://javaclasses.org" qname="pns:spieler" type="tns:Player"/>
+        <parameter xmlns:pns="http://webservices.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:GameLobbyID" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.org" xmlns:retNS="http://webservices.org" xmlns:rtns="http://javaclasses.org" name="getGameLobby" qname="operNS:getGameLobby" returnQName="retNS:getGameLobbyReturn" returnType="rtns:GameLobby" soapAction="">
+        <parameter xmlns:pns="http://webservices.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:GameLobbyID" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="logout createGameLobby getGameLobby joinGameLobby login"/>
 
+      <typeMapping xmlns:ns="http://javaclasses.org" qname="ns:GameLobby" type="java:org.javaclasses.GameLobby" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://javaclasses.org" qname="ns:Player" type="java:org.javaclasses.Player" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>
 </deployment>

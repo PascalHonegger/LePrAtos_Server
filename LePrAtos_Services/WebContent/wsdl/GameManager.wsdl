@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://webservices.org" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservices.org" xmlns:intf="http://webservices.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions targetNamespace="http://webservices.org" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservices.org" xmlns:intf="http://webservices.org" xmlns:tns1="http://javaclasses.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://webservices.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://javaclasses.org"/>
    <element name="login">
     <complexType>
      <sequence>
@@ -14,7 +15,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="loginResponse">
     <complexType>
      <sequence>
-      <element name="loginReturn" type="xsd:string"/>
+      <element name="loginReturn" type="tns1:Player"/>
      </sequence>
     </complexType>
    </element>
@@ -28,8 +29,91 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="createGameLobby">
+    <complexType>
+     <sequence>
+      <element name="spieler" type="tns1:Player"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createGameLobbyResponse">
+    <complexType>
+     <sequence>
+      <element name="createGameLobbyReturn" type="tns1:GameLobby"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="joinGameLobby">
+    <complexType>
+     <sequence>
+      <element name="spieler" type="tns1:Player"/>
+      <element name="GameLobbyID" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="joinGameLobbyResponse">
+    <complexType>
+     <sequence>
+      <element name="joinGameLobbyReturn" type="tns1:GameLobby"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getGameLobby">
+    <complexType>
+     <sequence>
+      <element name="GameLobbyID" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getGameLobbyResponse">
+    <complexType>
+     <sequence>
+      <element name="getGameLobbyReturn" type="tns1:GameLobby"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://javaclasses.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="Player">
+    <sequence/>
+   </complexType>
+   <complexType name="GameLobby">
+    <sequence>
+     <element name="GameLobbyID" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
   </schema>
  </wsdl:types>
+
+   <wsdl:message name="getGameLobbyRequest">
+
+      <wsdl:part element="impl:getGameLobby" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="joinGameLobbyResponse">
+
+      <wsdl:part element="impl:joinGameLobbyResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="joinGameLobbyRequest">
+
+      <wsdl:part element="impl:joinGameLobby" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createGameLobbyResponse">
+
+      <wsdl:part element="impl:createGameLobbyResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGameLobbyResponse">
+
+      <wsdl:part element="impl:getGameLobbyResponse" name="parameters"/>
+
+   </wsdl:message>
 
    <wsdl:message name="loginResponse">
 
@@ -55,6 +139,12 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="createGameLobbyRequest">
+
+      <wsdl:part element="impl:createGameLobby" name="parameters"/>
+
+   </wsdl:message>
+
    <wsdl:portType name="GameManager">
 
       <wsdl:operation name="login">
@@ -70,6 +160,30 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          <wsdl:input message="impl:logoutRequest" name="logoutRequest"/>
 
          <wsdl:output message="impl:logoutResponse" name="logoutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createGameLobby">
+
+         <wsdl:input message="impl:createGameLobbyRequest" name="createGameLobbyRequest"/>
+
+         <wsdl:output message="impl:createGameLobbyResponse" name="createGameLobbyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="joinGameLobby">
+
+         <wsdl:input message="impl:joinGameLobbyRequest" name="joinGameLobbyRequest"/>
+
+         <wsdl:output message="impl:joinGameLobbyResponse" name="joinGameLobbyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGameLobby">
+
+         <wsdl:input message="impl:getGameLobbyRequest" name="getGameLobbyRequest"/>
+
+         <wsdl:output message="impl:getGameLobbyResponse" name="getGameLobbyResponse"/>
 
       </wsdl:operation>
 
@@ -108,6 +222,60 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="logoutResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createGameLobby">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createGameLobbyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createGameLobbyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="joinGameLobby">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="joinGameLobbyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="joinGameLobbyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGameLobby">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGameLobbyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGameLobbyResponse">
 
             <wsdlsoap:body use="literal"/>
 
