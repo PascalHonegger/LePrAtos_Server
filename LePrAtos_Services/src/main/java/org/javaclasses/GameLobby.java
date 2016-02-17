@@ -6,7 +6,7 @@ import java.util.UUID;
 public class GameLobby
 {
 	public String GameLobbyID;
-	private ArrayList<Player> GamePlayerList = new ArrayList<Player>();
+	public ArrayList<Player> GamePlayerList = new ArrayList<Player>();
 	
 	public GameLobby(Player spieler)
 	{
