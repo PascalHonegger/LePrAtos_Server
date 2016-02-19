@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class Player
 {
-	public String uuid;
-	public String username;
+	private String uuid;
+	private String username;
 	
 	public Player(String username)
 	{

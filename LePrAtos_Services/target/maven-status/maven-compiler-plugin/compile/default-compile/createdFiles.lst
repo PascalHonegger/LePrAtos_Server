@@ -1,0 +1,4 @@
+org\javaclasses\Player.class
+org\javaclasses\GameLobby.class
+org\webservices\GameManager.class
+org\webservices\GameManagerImpl.class

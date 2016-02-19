@@ -8,10 +8,12 @@ public class GameLobby
 	public String GameLobbyID;
 	public ArrayList<Player> GamePlayerList = new ArrayList<Player>();
 	
+	
 	public GameLobby(Player spieler)
 	{
 		GamePlayerList.add(spieler);
 		GameLobbyID = UUID.randomUUID().toString();
+		
 	}
 	
 	public GameLobby()
@@ -23,4 +25,17 @@ public class GameLobby
 	{
 		GamePlayerList.add(spieler);
 	}
+
+	public String getGameLobbyID()
+	{
+		return GameLobbyID;
+	}
+
+	public void setGameLobbyID(String gameLobbyID)
+	{
+		GameLobbyID = gameLobbyID;
+	}
+	
+	
+
 }
