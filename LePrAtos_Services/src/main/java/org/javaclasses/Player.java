@@ -2,41 +2,24 @@ package org.javaclasses;
 
 import java.util.UUID;
 
-public class Player
+public class Player extends PlayerIdentification
 {
-	private String uuid;
-	private String username;
+	private String playerID;
 	
 	public Player(String username)
 	{
-		this.uuid = UUID.randomUUID().toString();
-		this.username = username;
+		super(username);
+		this.playerID = UUID.randomUUID().toString();
 	}
 	
-	public Player()
+	public String getPlayerID()
 	{
-		
+		return playerID;
 	}
 
-	public String getUuid()
+	public void setPlayerID(String playerID)
 	{
-		return uuid;
+		this.playerID = playerID;
 	}
 
-	public void setUuid(String uuid)
-	{
-		this.uuid = uuid;
-	}
-
-	public String getUsername()
-	{
-		return username;
-	}
-
-	public void setUsername(String username)
-	{
-		this.username = username;
-	}
-	
-	
 }

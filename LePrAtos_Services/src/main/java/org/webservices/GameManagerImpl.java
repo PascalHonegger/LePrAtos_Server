@@ -5,13 +5,21 @@ import java.util.ArrayList;
 import javax.jws.WebService;
 
 import org.javaclasses.GameLobby;
+import org.javaclasses.PersistentInformation;
 import org.javaclasses.Player;
+
 
 @WebService(endpointInterface = "org.webservices.GameManager")
 public class GameManagerImpl implements GameManager
 {
-	private ArrayList<Player> PlayerList = new ArrayList<Player>();
-	private static ArrayList<GameLobby> GameLobbyList = new ArrayList<GameLobby>();
+	private PersistentInformation info;
+
+	public GameManagerImpl()
+	{
+		info = PersistentInformation.getInstance();
+	}
+	
+	private static ArrayList<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
 
 	public Player login(String username)
 	{
@@ -22,7 +30,7 @@ public class GameManagerImpl implements GameManager
 		else
 		{
 			Player spieler = new Player(username);
-			PlayerList.add(spieler);
+			info.getActivePlayerList().add(spieler);
 
 			return spieler;
 		}
@@ -33,25 +41,36 @@ public class GameManagerImpl implements GameManager
 		return "Logged out";
 	}
 
-	public GameLobby createGameLobby(Player spieler)
+	public GameLobby createGameLobby(String playerID) throws Exception
 	{
-		GameLobby newLobby = new GameLobby(spieler);
-		GameLobbyList.add(newLobby);
+		Player currentPlayer = null;
+		
+			for (Player player : info.getActivePlayerList())
+			{
+				if (player.getPlayerID().equals(playerID)) {
+					currentPlayer = player;
+					break;
+				}
+			}
+			
+		GameLobby newLobby = new GameLobby(currentPlayer);
+		
+		gameLobbyList.add(newLobby);
 		return newLobby;
 	}
 
-	public GameLobby joinGameLobby(Player spieler, String GameLobbyID)
+	public GameLobby joinGameLobby(Player spieler, String GameLobbyID) throws Exception
 	{
 		return new GameLobby(spieler);
 	}
 
 	public GameLobby getGameLobby(String GameLobbyID)
 	{
-		for (int zaehler = 0; zaehler < GameLobbyList.size(); zaehler++)
+		for (int zaehler = 0; zaehler < gameLobbyList.size(); zaehler++)
 		{
-			if (GameLobbyList.get(zaehler).getGameLobbyID() == GameLobbyID)
+			if (gameLobbyList.get(zaehler).getGameLobbyID() == GameLobbyID)
 			{
-				return GameLobbyList.get(zaehler);
+				return gameLobbyList.get(zaehler);
 			}
 		}
 		return null;

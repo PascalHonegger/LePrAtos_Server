@@ -3,17 +3,21 @@ package org.javaclasses;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.xml.bind.ValidationException;
+
 public class GameLobby
 {
-	public String GameLobbyID;
-	public ArrayList<Player> GamePlayerList = new ArrayList<Player>();
+	private String gameLobbyID;
+	private String gameLobbyAdminID;
+	private ArrayList<PlayerIdentification> gamePlayerList = new ArrayList<PlayerIdentification>();
 	
 	
-	public GameLobby(Player spieler)
+	public GameLobby(Player currentPlayer) throws ValidationException
 	{
-		GamePlayerList.add(spieler);
-		GameLobbyID = UUID.randomUUID().toString();
-		
+		MyAssert.NotNull(currentPlayer, "Spieler muss gesetzt sein");
+		gameLobbyAdminID = currentPlayer.getPlayerID();
+		gamePlayerList.add(currentPlayer);
+		gameLobbyID = UUID.randomUUID().toString();
 	}
 	
 	public GameLobby()
@@ -23,17 +27,17 @@ public class GameLobby
 	
 	public void joinGameLobby(Player spieler)
 	{
-		GamePlayerList.add(spieler);
+		gamePlayerList.add(spieler);
 	}
 
 	public String getGameLobbyID()
 	{
-		return GameLobbyID;
+		return gameLobbyID;
 	}
 
 	public void setGameLobbyID(String gameLobbyID)
 	{
-		GameLobbyID = gameLobbyID;
+		this.gameLobbyID = gameLobbyID;
 	}
 	
 	
