@@ -12,25 +12,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "login", namespace = "http://webservices.org/")
 public class Login {
 
-    @XmlElement(name = "arg0", namespace = "")
-    private String arg0;
+    @XmlElement(name = "username", namespace = "")
+    private String username;
 
     /**
      * 
      * @return
      *     returns String
      */
-    public String getArg0() {
-        return this.arg0;
+    public String getUsername() {
+        return this.username;
     }
 
     /**
      * 
-     * @param arg0
-     *     the value for the arg0 property
+     * @param username
+     *     the value for the username property
      */
-    public void setArg0(String arg0) {
-        this.arg0 = arg0;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

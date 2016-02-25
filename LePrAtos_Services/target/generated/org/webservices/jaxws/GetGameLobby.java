@@ -12,25 +12,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "getGameLobby", namespace = "http://webservices.org/")
 public class GetGameLobby {
 
-    @XmlElement(name = "arg0", namespace = "")
-    private String arg0;
+    @XmlElement(name = "GameLobbyID", namespace = "")
+    private String gameLobbyID;
 
     /**
      * 
      * @return
      *     returns String
      */
-    public String getArg0() {
-        return this.arg0;
+    public String getGameLobbyID() {
+        return this.gameLobbyID;
     }
 
     /**
      * 
-     * @param arg0
-     *     the value for the arg0 property
+     * @param gameLobbyID
+     *     the value for the gameLobbyID property
      */
-    public void setArg0(String arg0) {
-        this.arg0 = arg0;
+    public void setGameLobbyID(String gameLobbyID) {
+        this.gameLobbyID = gameLobbyID;
     }
 
 }

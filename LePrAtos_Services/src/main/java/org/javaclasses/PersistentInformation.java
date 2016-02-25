@@ -20,9 +20,14 @@ public class PersistentInformation
 	}
 	
 	private List<Player> _activePlayers = new ArrayList<Player>();
+	private List<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
 	
 	public List<Player> getActivePlayerList() {
 		return _activePlayers;
+	}
+	
+	public List<GameLobby> getGameLobbyList() {
+		return gameLobbyList;
 	}
 	
 }

@@ -6,37 +6,36 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import org.javaclasses.Player;
 
 @XmlRootElement(name = "joinGameLobby", namespace = "http://webservices.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "joinGameLobby", namespace = "http://webservices.org/", propOrder = {
-    "arg0",
-    "arg1"
+    "playerID",
+    "gameLobbyID"
 })
 public class JoinGameLobby {
 
-    @XmlElement(name = "arg0", namespace = "")
-    private Player arg0;
-    @XmlElement(name = "arg1", namespace = "")
-    private String arg1;
+    @XmlElement(name = "playerID", namespace = "")
+    private String playerID;
+    @XmlElement(name = "GameLobbyID", namespace = "")
+    private String gameLobbyID;
 
     /**
      * 
      * @return
-     *     returns Player
+     *     returns String
      */
-    public Player getArg0() {
-        return this.arg0;
+    public String getPlayerID() {
+        return this.playerID;
     }
 
     /**
      * 
-     * @param arg0
-     *     the value for the arg0 property
+     * @param playerID
+     *     the value for the playerID property
      */
-    public void setArg0(Player arg0) {
-        this.arg0 = arg0;
+    public void setPlayerID(String playerID) {
+        this.playerID = playerID;
     }
 
     /**
@@ -44,17 +43,17 @@ public class JoinGameLobby {
      * @return
      *     returns String
      */
-    public String getArg1() {
-        return this.arg1;
+    public String getGameLobbyID() {
+        return this.gameLobbyID;
     }
 
     /**
      * 
-     * @param arg1
-     *     the value for the arg1 property
+     * @param gameLobbyID
+     *     the value for the gameLobbyID property
      */
-    public void setArg1(String arg1) {
-        this.arg1 = arg1;
+    public void setGameLobbyID(String gameLobbyID) {
+        this.gameLobbyID = gameLobbyID;
     }
 
 }

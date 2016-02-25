@@ -1,6 +1,7 @@
 package org.webservices;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jws.WebService;
 
@@ -19,7 +20,7 @@ public class GameManagerImpl implements GameManager
 		info = PersistentInformation.getInstance();
 	}
 	
-	private static ArrayList<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
+//	private static ArrayList<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
 
 	public Player login(String username)
 	{
@@ -36,8 +37,20 @@ public class GameManagerImpl implements GameManager
 		}
 	}
 
-	public String logout()
+	public String logout(String playerID)
 	{
+//		Player currentPlayer = null;
+//		
+//		for (Player player : info.getActivePlayerList())
+//		{
+//			if (player.getPlayerID().equals(playerID)) {
+//				currentPlayer = player;
+//				break;
+//			}
+//		}
+//		
+//		info.getActivePlayerList().remove(currentPlayer);
+		
 		return "Logged out";
 	}
 
@@ -55,24 +68,86 @@ public class GameManagerImpl implements GameManager
 			
 		GameLobby newLobby = new GameLobby(currentPlayer);
 		
-		gameLobbyList.add(newLobby);
+		info.getGameLobbyList().add(newLobby);
+//		info.getActivePlayerList().remove(currentPlayer);
+		
 		return newLobby;
 	}
 
-	public GameLobby joinGameLobby(Player spieler, String GameLobbyID) throws Exception
+	public GameLobby joinGameLobby(String playerID, String GameLobbyID) throws Exception
 	{
-		return new GameLobby(spieler);
+		Player currentPlayer = null;
+		GameLobby currentGameLobby = null;
+		
+		for (Player player : info.getActivePlayerList())
+		{
+			if (player.getPlayerID().equals(playerID)) {
+				currentPlayer = player;
+				break;
+			}
+		}
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
+			}
+		}
+		
+		currentGameLobby.joinGameLobby(currentPlayer);
+		
+		return currentGameLobby;
 	}
 
 	public GameLobby getGameLobby(String GameLobbyID)
 	{
-		for (int zaehler = 0; zaehler < gameLobbyList.size(); zaehler++)
+		
+		GameLobby currentGameLobby = null;
+		
+//		for (int zaehler = 0; zaehler < gameLobbyList.size(); zaehler++)
+//		{
+//			if (gameLobbyList.get(zaehler).getGameLobbyID() == GameLobbyID)
+//			{
+//				return gameLobbyList.get(zaehler);
+//			}
+//		}
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
 		{
-			if (gameLobbyList.get(zaehler).getGameLobbyID() == GameLobbyID)
-			{
-				return gameLobbyList.get(zaehler);
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
 			}
 		}
-		return null;
+		
+		return currentGameLobby;
+	}
+	
+	public List getGameLobbies()
+	{
+		GameLobby currentGameLobby = null;
+		List<GameLobby> gameLobbies = new ArrayList<GameLobby>();
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			gameLobbies.add(gamelobby);
+		}
+		
+		return gameLobbies;
+	}
+	
+	public Player getPlayerByID(String playerID)
+	{
+		Player currentPlayer = null;
+		
+		for (Player player : info.getActivePlayerList())
+		{
+			if (player.getPlayerID().equals(playerID)) {
+				currentPlayer = player;
+				break;
+			}
+		}
+		return currentPlayer;
 	}
 }
