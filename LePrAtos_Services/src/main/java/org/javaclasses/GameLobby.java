@@ -7,18 +7,25 @@ import javax.xml.bind.ValidationException;
 
 public class GameLobby
 {
+	private PersistentInformation info;
+
 	private String gameLobbyID;
+	private String gameLobbyName;
 	private String gameLobbyAdmin;
 	private ArrayList<PlayerIdentification> gamePlayerList = new ArrayList<PlayerIdentification>();
 	private ArrayList<String> gamePlayerListPublic = new ArrayList<String>();
 	
 	
-	public GameLobby(Player currentPlayer) throws ValidationException
+	public GameLobby(Player currentPlayer, String gameLobbyName) throws ValidationException
 	{
+		info = PersistentInformation.getInstance();
+		
 		MyAssert.NotNull(currentPlayer, "Spieler muss gesetzt sein");
 		gameLobbyAdmin = currentPlayer.getUsername();
+		this.gameLobbyName = gameLobbyName;
 		gamePlayerList.add((PlayerIdentification)currentPlayer);
 		gamePlayerListPublic.add(currentPlayer.getUsername());
+		info.getInactivePlayerList().remove(currentPlayer);
 		gameLobbyID = UUID.randomUUID().toString();
 	}
 	
@@ -31,6 +38,14 @@ public class GameLobby
 	{
 		gamePlayerList.add((PlayerIdentification)spieler);
 		gamePlayerListPublic.add(spieler.getUsername());
+		info.getInactivePlayerList().remove(spieler);
+	}
+	
+	public void leaveGameLobby(Player spieler)
+	{
+		gamePlayerList.remove(spieler);
+		gamePlayerListPublic.remove(spieler.getUsername());
+		info.getInactivePlayerList().add(spieler);
 	}
 
 	public String getGameLobbyID()
@@ -42,7 +57,6 @@ public class GameLobby
 	{
 		return gameLobbyAdmin;
 	}
-	
 
 	public void setGameLobbyAdmin(String gameLobbyAdmin)
 	{
@@ -63,6 +77,18 @@ public class GameLobby
 	{
 		this.gamePlayerListPublic = gamePlayerListPublic;
 	}
+
+	public String getGameLobbyName()
+	{
+		return gameLobbyName;
+	}
+
+	public void setGameLobbyName(String gameLobbyName)
+	{
+		this.gameLobbyName = gameLobbyName;
+	}
+	
+	
 	
 	
 	

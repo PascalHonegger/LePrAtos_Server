@@ -21,23 +21,17 @@
   <message name="joinGameLobbyResponse">
     <part name="parameters" element="tns:joinGameLobbyResponse"/>
   </message>
+  <message name="leaveGameLobby">
+    <part name="parameters" element="tns:leaveGameLobby"/>
+  </message>
+  <message name="leaveGameLobbyResponse">
+    <part name="parameters" element="tns:leaveGameLobbyResponse"/>
+  </message>
   <message name="getGameLobby">
     <part name="parameters" element="tns:getGameLobby"/>
   </message>
   <message name="getGameLobbyResponse">
     <part name="parameters" element="tns:getGameLobbyResponse"/>
-  </message>
-  <message name="getGameLobbies">
-    <part name="parameters" element="tns:getGameLobbies"/>
-  </message>
-  <message name="getGameLobbiesResponse">
-    <part name="parameters" element="tns:getGameLobbiesResponse"/>
-  </message>
-  <message name="getPlayerByID">
-    <part name="parameters" element="tns:getPlayerByID"/>
-  </message>
-  <message name="getPlayerByIDResponse">
-    <part name="parameters" element="tns:getPlayerByIDResponse"/>
   </message>
   <message name="login">
     <part name="parameters" element="tns:login"/>
@@ -51,6 +45,18 @@
   <message name="logoutResponse">
     <part name="parameters" element="tns:logoutResponse"/>
   </message>
+  <message name="getGameLobbies">
+    <part name="parameters" element="tns:getGameLobbies"/>
+  </message>
+  <message name="getGameLobbiesResponse">
+    <part name="parameters" element="tns:getGameLobbiesResponse"/>
+  </message>
+  <message name="getPlayerByID">
+    <part name="parameters" element="tns:getPlayerByID"/>
+  </message>
+  <message name="getPlayerByIDResponse">
+    <part name="parameters" element="tns:getPlayerByIDResponse"/>
+  </message>
   <portType name="GameManager">
     <operation name="createGameLobby">
       <input wsam:Action="http://webservices.org/GameManager/createGameLobbyRequest" message="tns:createGameLobby"/>
@@ -62,17 +68,13 @@
       <output wsam:Action="http://webservices.org/GameManager/joinGameLobbyResponse" message="tns:joinGameLobbyResponse"/>
       <fault message="tns:Exception" name="Exception" wsam:Action="http://webservices.org/GameManager/joinGameLobby/Fault/Exception"/>
     </operation>
+    <operation name="leaveGameLobby">
+      <input wsam:Action="http://webservices.org/GameManager/leaveGameLobbyRequest" message="tns:leaveGameLobby"/>
+      <output wsam:Action="http://webservices.org/GameManager/leaveGameLobbyResponse" message="tns:leaveGameLobbyResponse"/>
+    </operation>
     <operation name="getGameLobby">
       <input wsam:Action="http://webservices.org/GameManager/getGameLobbyRequest" message="tns:getGameLobby"/>
       <output wsam:Action="http://webservices.org/GameManager/getGameLobbyResponse" message="tns:getGameLobbyResponse"/>
-    </operation>
-    <operation name="getGameLobbies">
-      <input wsam:Action="http://webservices.org/GameManager/getGameLobbiesRequest" message="tns:getGameLobbies"/>
-      <output wsam:Action="http://webservices.org/GameManager/getGameLobbiesResponse" message="tns:getGameLobbiesResponse"/>
-    </operation>
-    <operation name="getPlayerByID">
-      <input wsam:Action="http://webservices.org/GameManager/getPlayerByIDRequest" message="tns:getPlayerByID"/>
-      <output wsam:Action="http://webservices.org/GameManager/getPlayerByIDResponse" message="tns:getPlayerByIDResponse"/>
     </operation>
     <operation name="login">
       <input wsam:Action="http://webservices.org/GameManager/loginRequest" message="tns:login"/>
@@ -81,6 +83,14 @@
     <operation name="logout">
       <input wsam:Action="http://webservices.org/GameManager/logoutRequest" message="tns:logout"/>
       <output wsam:Action="http://webservices.org/GameManager/logoutResponse" message="tns:logoutResponse"/>
+    </operation>
+    <operation name="getGameLobbies">
+      <input wsam:Action="http://webservices.org/GameManager/getGameLobbiesRequest" message="tns:getGameLobbies"/>
+      <output wsam:Action="http://webservices.org/GameManager/getGameLobbiesResponse" message="tns:getGameLobbiesResponse"/>
+    </operation>
+    <operation name="getPlayerByID">
+      <input wsam:Action="http://webservices.org/GameManager/getPlayerByIDRequest" message="tns:getPlayerByID"/>
+      <output wsam:Action="http://webservices.org/GameManager/getPlayerByIDResponse" message="tns:getPlayerByIDResponse"/>
     </operation>
   </portType>
   <binding name="GameManagerImplPortBinding" type="tns:GameManager">
@@ -109,25 +119,16 @@
         <soap:fault name="Exception" use="literal"/>
       </fault>
     </operation>
+    <operation name="leaveGameLobby">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="getGameLobby">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="getGameLobbies">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="getPlayerByID">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -146,6 +147,24 @@
       </output>
     </operation>
     <operation name="logout">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getGameLobbies">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getPlayerByID">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
