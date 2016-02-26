@@ -169,7 +169,7 @@ public class GameManagerImpl implements GameManager
 	{
 		Player currentPlayer = null;
 		
-		for (Player player : info.getInactivePlayerList())
+		for (Player player : info.getPlayerList())
 		{
 			if (player.getPlayerID().equals(playerID)) {
 				currentPlayer = player;
