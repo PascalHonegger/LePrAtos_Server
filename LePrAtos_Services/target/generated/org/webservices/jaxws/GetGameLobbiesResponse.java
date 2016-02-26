@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.javaclasses.GameLobby;
 
 @XmlRootElement(name = "getGameLobbiesResponse", namespace = "http://webservices.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -14,14 +15,14 @@ import javax.xml.bind.annotation.XmlType;
 public class GetGameLobbiesResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private List _return;
+    private List<GameLobby> _return;
 
     /**
      * 
      * @return
-     *     returns List
+     *     returns List<GameLobby>
      */
-    public List getReturn() {
+    public List<GameLobby> getReturn() {
         return this._return;
     }
 
@@ -30,7 +31,7 @@ public class GetGameLobbiesResponse {
      * @param _return
      *     the value for the _return property
      */
-    public void setReturn(List _return) {
+    public void setReturn(List<GameLobby> _return) {
         this._return = _return;
     }
 

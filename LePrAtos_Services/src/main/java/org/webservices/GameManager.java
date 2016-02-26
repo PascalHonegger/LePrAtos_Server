@@ -32,7 +32,7 @@ public interface GameManager
 	public GameLobby getGameLobby(@WebParam(name="GameLobbyID") String GameLobbyID);
 	
 	@WebMethod
-	public List getGameLobbies();
+	public List<GameLobby> getGameLobbies();
 	
 	@WebMethod
 	public Player getPlayerByID(@WebParam(name="playerID") String playerID);
