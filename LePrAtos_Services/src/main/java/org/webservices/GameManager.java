@@ -1,17 +1,39 @@
 package org.webservices;
 
-import java.util.UUID;
+import java.util.List;
 
-public class GameManager
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import org.javaclasses.GameLobby;
+import org.javaclasses.Player;
+
+@WebService
+public interface GameManager
 {
-	public String login(String username)
-	{
-		String uuid = UUID.randomUUID().toString();
-		return uuid;
-	}
+
+	@WebMethod
+	public Player login(@WebParam(name="username") String username);
 	
-	public String logout()
-	{
-		return "Logged out";
-	}
+	@WebMethod
+	public String logout(@WebParam(name="playerID") String playerID);
+	
+	@WebMethod
+	public GameLobby createGameLobby(@WebParam(name = "playerID") String playerID, @WebParam(name="gameLobbyName") String gameLobbyName) throws Exception;
+	
+	@WebMethod
+	public GameLobby joinGameLobby(@WebParam(name="playerID") String playerID, @WebParam(name="GameLobbyID") String GameLobbyID) throws Exception;
+	
+	@WebMethod
+	public void leaveGameLobby(@WebParam(name="playerID") String playerID, @WebParam(name="GameLobbyID") String GameLobbyID);
+	
+	@WebMethod
+	public GameLobby getGameLobby(@WebParam(name="GameLobbyID") String GameLobbyID);
+	
+	@WebMethod
+	public List<GameLobby> getGameLobbies();
+	
+	@WebMethod
+	public Player getPlayerByID(@WebParam(name="playerID") String playerID);
 }
