@@ -11,9 +11,8 @@ public class GameLobby
 
 	private String gameLobbyID;
 	private String gameLobbyName;
-	private String gameLobbyAdmin;
+	private PlayerIdentification gameLobbyAdmin;
 	private ArrayList<PlayerIdentification> gamePlayerList = new ArrayList<PlayerIdentification>();
-	private ArrayList<String> gamePlayerListPublic = new ArrayList<String>();
 	
 	
 	public GameLobby(Player currentPlayer, String gameLobbyName) throws ValidationException
@@ -21,10 +20,9 @@ public class GameLobby
 		info = PersistentInformation.getInstance();
 		
 		MyAssert.NotNull(currentPlayer, "Spieler muss gesetzt sein");
-		gameLobbyAdmin = currentPlayer.getUsername();
+		gameLobbyAdmin = (PlayerIdentification)currentPlayer;
 		this.gameLobbyName = gameLobbyName;
 		gamePlayerList.add((PlayerIdentification)currentPlayer);
-		gamePlayerListPublic.add(currentPlayer.getUsername());
 		info.getInactivePlayerList().remove(currentPlayer);
 		gameLobbyID = UUID.randomUUID().toString();
 	}
@@ -37,15 +35,23 @@ public class GameLobby
 	public void joinGameLobby(Player spieler)
 	{
 		gamePlayerList.add((PlayerIdentification)spieler);
-		gamePlayerListPublic.add(spieler.getUsername());
 		info.getInactivePlayerList().remove(spieler);
 	}
 	
 	public void leaveGameLobby(Player spieler)
 	{
 		gamePlayerList.remove(spieler);
-		gamePlayerListPublic.remove(spieler.getUsername());
 		info.getInactivePlayerList().add(spieler);
+		
+		if(gameLobbyAdmin == spieler)
+		{
+			setNewAdmin();
+		}
+	}
+	
+	public void setNewAdmin()
+	{
+		gameLobbyAdmin = gamePlayerList.get(0);
 	}
 
 	public String getGameLobbyID()
@@ -53,29 +59,14 @@ public class GameLobby
 		return gameLobbyID;
 	}
 
-	public String getGameLobbyAdmin()
+	public PlayerIdentification getGameLobbyAdmin()
 	{
 		return gameLobbyAdmin;
-	}
-
-	public void setGameLobbyAdmin(String gameLobbyAdmin)
-	{
-		this.gameLobbyAdmin = gameLobbyAdmin;
 	}
 
 	public void setGameLobbyID(String gameLobbyID)
 	{
 		this.gameLobbyID = gameLobbyID;
-	}
-
-	public ArrayList<String> getGamePlayerListPublic()
-	{
-		return gamePlayerListPublic;
-	}
-
-	public void setGamePlayerListPublic(ArrayList<String> gamePlayerListPublic)
-	{
-		this.gamePlayerListPublic = gamePlayerListPublic;
 	}
 
 	public String getGameLobbyName()
@@ -87,6 +78,23 @@ public class GameLobby
 	{
 		this.gameLobbyName = gameLobbyName;
 	}
+
+	public void setGameLobbyAdmin(PlayerIdentification gameLobbyAdmin)
+	{
+		this.gameLobbyAdmin = gameLobbyAdmin;
+	}
+
+	public ArrayList<PlayerIdentification> getGamePlayerList()
+	{
+		return gamePlayerList;
+	}
+
+	public void setGamePlayerList(ArrayList<PlayerIdentification> gamePlayerList)
+	{
+		this.gamePlayerList = gamePlayerList;
+	}
+	
+	
 	
 	
 	

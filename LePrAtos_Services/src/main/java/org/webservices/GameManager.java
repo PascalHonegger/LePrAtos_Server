@@ -7,17 +7,26 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import org.javaclasses.GameLobby;
+import org.javaclasses.MyExceptions;
 import org.javaclasses.Player;
 
 @WebService
 public interface GameManager
 {
-
 	@WebMethod
-	public Player login(@WebParam(name="username") String username);
+	public Player registration(@WebParam(name="email") String email, @WebParam(name="username") String username, @WebParam(name="password") String password);
 	
 	@WebMethod
-	public String logout(@WebParam(name="playerID") String playerID);
+	public boolean username_availability(@WebParam(name="username") String username);
+	
+	@WebMethod
+	public boolean email_verification(@WebParam (name="email") String email);
+	
+	@WebMethod
+	public Player login(@WebParam(name="username_email") String username, @WebParam(name="password") String password) throws MyExceptions;
+	
+	@WebMethod
+	public void logout(@WebParam(name="playerID") String playerID);
 	
 	@WebMethod
 	public GameLobby createGameLobby(@WebParam(name = "playerID") String playerID, @WebParam(name="gameLobbyName") String gameLobbyName) throws Exception;
@@ -36,4 +45,7 @@ public interface GameManager
 	
 	@WebMethod
 	public Player getPlayerByID(@WebParam(name="playerID") String playerID);
+	
+	@WebMethod
+	public void setPlayerStatus(@WebParam(name="playerID") String playerID, @WebParam(name="status") boolean status);
 }

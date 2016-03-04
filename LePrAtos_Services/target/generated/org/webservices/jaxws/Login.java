@@ -9,28 +9,51 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "login", namespace = "http://webservices.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "login", namespace = "http://webservices.org/")
+@XmlType(name = "login", namespace = "http://webservices.org/", propOrder = {
+    "usernameEmail",
+    "password"
+})
 public class Login {
 
-    @XmlElement(name = "username", namespace = "")
-    private String username;
+    @XmlElement(name = "username_email", namespace = "")
+    private String usernameEmail;
+    @XmlElement(name = "password", namespace = "")
+    private String password;
 
     /**
      * 
      * @return
      *     returns String
      */
-    public String getUsername() {
-        return this.username;
+    public String getUsernameEmail() {
+        return this.usernameEmail;
     }
 
     /**
      * 
-     * @param username
-     *     the value for the username property
+     * @param usernameEmail
+     *     the value for the usernameEmail property
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsernameEmail(String usernameEmail) {
+        this.usernameEmail = usernameEmail;
+    }
+
+    /**
+     * 
+     * @return
+     *     returns String
+     */
+    public String getPassword() {
+        return this.password;
+    }
+
+    /**
+     * 
+     * @param password
+     *     the value for the password property
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

@@ -9,5 +9,4 @@ public class MyAssert
 			throw new ValidationException(errorMessage);
 		}
 	}
-
 }

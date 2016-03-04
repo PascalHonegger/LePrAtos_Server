@@ -6,6 +6,12 @@
       <xsd:import namespace="http://webservices.org/" schemaLocation="GameManagerImplService_schema1.xsd"/>
     </xsd:schema>
   </types>
+  <message name="registration">
+    <part name="parameters" element="tns:registration"/>
+  </message>
+  <message name="registrationResponse">
+    <part name="parameters" element="tns:registrationResponse"/>
+  </message>
   <message name="createGameLobby">
     <part name="parameters" element="tns:createGameLobby"/>
   </message>
@@ -27,6 +33,33 @@
   <message name="leaveGameLobbyResponse">
     <part name="parameters" element="tns:leaveGameLobbyResponse"/>
   </message>
+  <message name="username_availability">
+    <part name="parameters" element="tns:username_availability"/>
+  </message>
+  <message name="username_availabilityResponse">
+    <part name="parameters" element="tns:username_availabilityResponse"/>
+  </message>
+  <message name="email_verification">
+    <part name="parameters" element="tns:email_verification"/>
+  </message>
+  <message name="email_verificationResponse">
+    <part name="parameters" element="tns:email_verificationResponse"/>
+  </message>
+  <message name="login">
+    <part name="parameters" element="tns:login"/>
+  </message>
+  <message name="loginResponse">
+    <part name="parameters" element="tns:loginResponse"/>
+  </message>
+  <message name="MyExceptions">
+    <part name="fault" element="tns:MyExceptions"/>
+  </message>
+  <message name="logout">
+    <part name="parameters" element="tns:logout"/>
+  </message>
+  <message name="logoutResponse">
+    <part name="parameters" element="tns:logoutResponse"/>
+  </message>
   <message name="getGameLobby">
     <part name="parameters" element="tns:getGameLobby"/>
   </message>
@@ -45,19 +78,17 @@
   <message name="getPlayerByIDResponse">
     <part name="parameters" element="tns:getPlayerByIDResponse"/>
   </message>
-  <message name="login">
-    <part name="parameters" element="tns:login"/>
+  <message name="setPlayerStatus">
+    <part name="parameters" element="tns:setPlayerStatus"/>
   </message>
-  <message name="loginResponse">
-    <part name="parameters" element="tns:loginResponse"/>
-  </message>
-  <message name="logout">
-    <part name="parameters" element="tns:logout"/>
-  </message>
-  <message name="logoutResponse">
-    <part name="parameters" element="tns:logoutResponse"/>
+  <message name="setPlayerStatusResponse">
+    <part name="parameters" element="tns:setPlayerStatusResponse"/>
   </message>
   <portType name="GameManager">
+    <operation name="registration">
+      <input wsam:Action="http://webservices.org/GameManager/registrationRequest" message="tns:registration"/>
+      <output wsam:Action="http://webservices.org/GameManager/registrationResponse" message="tns:registrationResponse"/>
+    </operation>
     <operation name="createGameLobby">
       <input wsam:Action="http://webservices.org/GameManager/createGameLobbyRequest" message="tns:createGameLobby"/>
       <output wsam:Action="http://webservices.org/GameManager/createGameLobbyResponse" message="tns:createGameLobbyResponse"/>
@@ -72,6 +103,23 @@
       <input wsam:Action="http://webservices.org/GameManager/leaveGameLobbyRequest" message="tns:leaveGameLobby"/>
       <output wsam:Action="http://webservices.org/GameManager/leaveGameLobbyResponse" message="tns:leaveGameLobbyResponse"/>
     </operation>
+    <operation name="username_availability">
+      <input wsam:Action="http://webservices.org/GameManager/username_availabilityRequest" message="tns:username_availability"/>
+      <output wsam:Action="http://webservices.org/GameManager/username_availabilityResponse" message="tns:username_availabilityResponse"/>
+    </operation>
+    <operation name="email_verification">
+      <input wsam:Action="http://webservices.org/GameManager/email_verificationRequest" message="tns:email_verification"/>
+      <output wsam:Action="http://webservices.org/GameManager/email_verificationResponse" message="tns:email_verificationResponse"/>
+    </operation>
+    <operation name="login">
+      <input wsam:Action="http://webservices.org/GameManager/loginRequest" message="tns:login"/>
+      <output wsam:Action="http://webservices.org/GameManager/loginResponse" message="tns:loginResponse"/>
+      <fault message="tns:MyExceptions" name="MyExceptions" wsam:Action="http://webservices.org/GameManager/login/Fault/MyExceptions"/>
+    </operation>
+    <operation name="logout">
+      <input wsam:Action="http://webservices.org/GameManager/logoutRequest" message="tns:logout"/>
+      <output wsam:Action="http://webservices.org/GameManager/logoutResponse" message="tns:logoutResponse"/>
+    </operation>
     <operation name="getGameLobby">
       <input wsam:Action="http://webservices.org/GameManager/getGameLobbyRequest" message="tns:getGameLobby"/>
       <output wsam:Action="http://webservices.org/GameManager/getGameLobbyResponse" message="tns:getGameLobbyResponse"/>
@@ -84,17 +132,22 @@
       <input wsam:Action="http://webservices.org/GameManager/getPlayerByIDRequest" message="tns:getPlayerByID"/>
       <output wsam:Action="http://webservices.org/GameManager/getPlayerByIDResponse" message="tns:getPlayerByIDResponse"/>
     </operation>
-    <operation name="login">
-      <input wsam:Action="http://webservices.org/GameManager/loginRequest" message="tns:login"/>
-      <output wsam:Action="http://webservices.org/GameManager/loginResponse" message="tns:loginResponse"/>
-    </operation>
-    <operation name="logout">
-      <input wsam:Action="http://webservices.org/GameManager/logoutRequest" message="tns:logout"/>
-      <output wsam:Action="http://webservices.org/GameManager/logoutResponse" message="tns:logoutResponse"/>
+    <operation name="setPlayerStatus">
+      <input wsam:Action="http://webservices.org/GameManager/setPlayerStatusRequest" message="tns:setPlayerStatus"/>
+      <output wsam:Action="http://webservices.org/GameManager/setPlayerStatusResponse" message="tns:setPlayerStatusResponse"/>
     </operation>
   </portType>
   <binding name="GameManagerImplPortBinding" type="tns:GameManager">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="registration">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="createGameLobby">
       <soap:operation soapAction=""/>
       <input>
@@ -128,6 +181,45 @@
         <soap:body use="literal"/>
       </output>
     </operation>
+    <operation name="username_availability">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="email_verification">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="login">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="MyExceptions">
+        <soap:fault name="MyExceptions" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="logout">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="getGameLobby">
       <soap:operation soapAction=""/>
       <input>
@@ -155,16 +247,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="login">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="logout">
+    <operation name="setPlayerStatus">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
