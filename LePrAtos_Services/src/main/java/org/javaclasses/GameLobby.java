@@ -21,8 +21,9 @@ public class GameLobby
 		
 		MyAssert.NotNull(currentPlayer, "Spieler muss gesetzt sein");
 		gameLobbyAdmin = (PlayerIdentification)currentPlayer;
+		gameLobbyAdmin.setStatus(true);
 		this.gameLobbyName = gameLobbyName;
-		gamePlayerList.add((PlayerIdentification)currentPlayer);
+//		gamePlayerList.add((PlayerIdentification)currentPlayer);
 		info.getInactivePlayerList().remove(currentPlayer);
 		gameLobbyID = UUID.randomUUID().toString();
 	}
@@ -40,18 +41,23 @@ public class GameLobby
 	
 	public void leaveGameLobby(Player spieler)
 	{
-		gamePlayerList.remove(spieler);
-		info.getInactivePlayerList().add(spieler);
-		
 		if(gameLobbyAdmin == spieler)
 		{
 			setNewAdmin();
 		}
+		else
+		{
+			gamePlayerList.remove(spieler);
+		}
+		
+		spieler.setStatus(false);
+		info.getInactivePlayerList().add(spieler);	
 	}
 	
 	public void setNewAdmin()
 	{
 		gameLobbyAdmin = gamePlayerList.get(0);
+		this.gamePlayerList.remove(gameLobbyAdmin);
 	}
 
 	public String getGameLobbyID()

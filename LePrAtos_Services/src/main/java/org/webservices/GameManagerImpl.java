@@ -145,9 +145,6 @@ public class GameManagerImpl implements GameManager
 				}
 			}
 		}
-		
-		
-		
 	}
 
 	public GameLobby createGameLobby(String playerID, String gameLobbyID) throws Exception

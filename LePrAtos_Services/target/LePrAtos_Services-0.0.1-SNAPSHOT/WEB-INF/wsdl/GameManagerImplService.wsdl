@@ -45,21 +45,6 @@
   <message name="email_verificationResponse">
     <part name="parameters" element="tns:email_verificationResponse"/>
   </message>
-  <message name="login">
-    <part name="parameters" element="tns:login"/>
-  </message>
-  <message name="loginResponse">
-    <part name="parameters" element="tns:loginResponse"/>
-  </message>
-  <message name="MyExceptions">
-    <part name="fault" element="tns:MyExceptions"/>
-  </message>
-  <message name="logout">
-    <part name="parameters" element="tns:logout"/>
-  </message>
-  <message name="logoutResponse">
-    <part name="parameters" element="tns:logoutResponse"/>
-  </message>
   <message name="getGameLobby">
     <part name="parameters" element="tns:getGameLobby"/>
   </message>
@@ -83,6 +68,21 @@
   </message>
   <message name="setPlayerStatusResponse">
     <part name="parameters" element="tns:setPlayerStatusResponse"/>
+  </message>
+  <message name="login">
+    <part name="parameters" element="tns:login"/>
+  </message>
+  <message name="loginResponse">
+    <part name="parameters" element="tns:loginResponse"/>
+  </message>
+  <message name="MyExceptions">
+    <part name="fault" element="tns:MyExceptions"/>
+  </message>
+  <message name="logout">
+    <part name="parameters" element="tns:logout"/>
+  </message>
+  <message name="logoutResponse">
+    <part name="parameters" element="tns:logoutResponse"/>
   </message>
   <portType name="GameManager">
     <operation name="registration">
@@ -111,15 +111,6 @@
       <input wsam:Action="http://webservices.org/GameManager/email_verificationRequest" message="tns:email_verification"/>
       <output wsam:Action="http://webservices.org/GameManager/email_verificationResponse" message="tns:email_verificationResponse"/>
     </operation>
-    <operation name="login">
-      <input wsam:Action="http://webservices.org/GameManager/loginRequest" message="tns:login"/>
-      <output wsam:Action="http://webservices.org/GameManager/loginResponse" message="tns:loginResponse"/>
-      <fault message="tns:MyExceptions" name="MyExceptions" wsam:Action="http://webservices.org/GameManager/login/Fault/MyExceptions"/>
-    </operation>
-    <operation name="logout">
-      <input wsam:Action="http://webservices.org/GameManager/logoutRequest" message="tns:logout"/>
-      <output wsam:Action="http://webservices.org/GameManager/logoutResponse" message="tns:logoutResponse"/>
-    </operation>
     <operation name="getGameLobby">
       <input wsam:Action="http://webservices.org/GameManager/getGameLobbyRequest" message="tns:getGameLobby"/>
       <output wsam:Action="http://webservices.org/GameManager/getGameLobbyResponse" message="tns:getGameLobbyResponse"/>
@@ -135,6 +126,15 @@
     <operation name="setPlayerStatus">
       <input wsam:Action="http://webservices.org/GameManager/setPlayerStatusRequest" message="tns:setPlayerStatus"/>
       <output wsam:Action="http://webservices.org/GameManager/setPlayerStatusResponse" message="tns:setPlayerStatusResponse"/>
+    </operation>
+    <operation name="login">
+      <input wsam:Action="http://webservices.org/GameManager/loginRequest" message="tns:login"/>
+      <output wsam:Action="http://webservices.org/GameManager/loginResponse" message="tns:loginResponse"/>
+      <fault message="tns:MyExceptions" name="MyExceptions" wsam:Action="http://webservices.org/GameManager/login/Fault/MyExceptions"/>
+    </operation>
+    <operation name="logout">
+      <input wsam:Action="http://webservices.org/GameManager/logoutRequest" message="tns:logout"/>
+      <output wsam:Action="http://webservices.org/GameManager/logoutResponse" message="tns:logoutResponse"/>
     </operation>
   </portType>
   <binding name="GameManagerImplPortBinding" type="tns:GameManager">
@@ -199,27 +199,6 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="login">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="MyExceptions">
-        <soap:fault name="MyExceptions" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="logout">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
     <operation name="getGameLobby">
       <soap:operation soapAction=""/>
       <input>
@@ -248,6 +227,27 @@
       </output>
     </operation>
     <operation name="setPlayerStatus">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="login">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="MyExceptions">
+        <soap:fault name="MyExceptions" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="logout">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

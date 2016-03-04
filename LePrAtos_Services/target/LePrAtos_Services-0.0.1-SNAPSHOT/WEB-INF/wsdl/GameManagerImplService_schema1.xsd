@@ -216,16 +216,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="logout">
-    <xs:sequence>
-      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="logoutResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="getGameLobbies">
     <xs:sequence/>
   </xs:complexType>
@@ -234,6 +224,16 @@
     <xs:sequence>
       <xs:element name="return" type="tns:gameLobby" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="logout">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="logoutResponse">
+    <xs:sequence/>
   </xs:complexType>
 </xs:schema>
 
