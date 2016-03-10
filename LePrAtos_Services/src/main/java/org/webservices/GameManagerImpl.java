@@ -214,11 +214,10 @@ public class GameManagerImpl implements GameManager
 			}
 		}
 		
-		
-		
-		
-		
+			
 		currentGameLobby.leaveGameLobby(currentPlayer);
+		
+		return;
 	}
 
 	public GameLobby getGameLobby(String GameLobbyID)
