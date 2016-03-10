@@ -1,6 +1,7 @@
 package org.javaclasses;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.xml.bind.ValidationException;
@@ -41,23 +42,33 @@ public class GameLobby
 	
 	public void leaveGameLobby(Player spieler)
 	{
-		if(gameLobbyAdmin == spieler)
+		if(gamePlayerList.stream().count() == 0)
 		{
-			setNewAdmin();
+			gameLobbyAdmin.setStatus(false);
+			info.getGameLobbyList().remove(this);
 		}
 		else
 		{
-			gamePlayerList.remove(spieler);
+			if(gameLobbyAdmin == spieler)
+			{
+				setNewAdmin();
+			}
+			else
+			{
+				gamePlayerList.remove(spieler);
+			}
+			
+			spieler.setStatus(false);
+			info.getInactivePlayerList().add(spieler);	
 		}
 		
-		spieler.setStatus(false);
-		info.getInactivePlayerList().add(spieler);	
 	}
 	
 	public void setNewAdmin()
 	{
 		gameLobbyAdmin = gamePlayerList.get(0);
 		this.gamePlayerList.remove(gameLobbyAdmin);
+		gameLobbyAdmin.setStatus(true);
 	}
 
 	public String getGameLobbyID()
