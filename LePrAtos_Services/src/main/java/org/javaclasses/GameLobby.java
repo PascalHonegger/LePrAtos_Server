@@ -12,6 +12,8 @@ public class GameLobby
 
 	private String gameLobbyID;
 	private String gameLobbyName;
+	private String gameLobbyPassword;
+	private int playerLimit = 10;
 	private PlayerIdentification gameLobbyAdmin;
 	private ArrayList<PlayerIdentification> gamePlayerList = new ArrayList<PlayerIdentification>();
 	
@@ -34,10 +36,17 @@ public class GameLobby
 		
 	}
 	
-	public void joinGameLobby(Player spieler)
+	public void joinGameLobby(Player spieler) throws MyExceptions
 	{
-		gamePlayerList.add((PlayerIdentification)spieler);
-		info.getInactivePlayerList().remove(spieler);
+		if(gamePlayerList.stream().count() < (this.playerLimit - 1))
+		{
+			gamePlayerList.add((PlayerIdentification)spieler);
+			info.getInactivePlayerList().remove(spieler);
+		}
+		else
+		{
+			throw new MyExceptions("Lobby ist voll"); 
+		}
 	}
 	
 	public void leaveGameLobby(Player spieler)
@@ -110,6 +119,28 @@ public class GameLobby
 	{
 		this.gamePlayerList = gamePlayerList;
 	}
+
+	public String getGameLobbyPassword()
+	{
+		return gameLobbyPassword;
+	}
+
+	public void setGameLobbyPassword(String gameLobbyPassword)
+	{
+		this.gameLobbyPassword = gameLobbyPassword;
+	}
+
+	public int getPlayerLimit()
+	{
+		return playerLimit;
+	}
+
+	public void setPlayerLimit(int playerLimit)
+	{
+		this.playerLimit = playerLimit;
+	}
+	
+	
 	
 	
 	

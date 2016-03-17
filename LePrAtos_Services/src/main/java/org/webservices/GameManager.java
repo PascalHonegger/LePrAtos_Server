@@ -32,6 +32,18 @@ public interface GameManager
 	public GameLobby createGameLobby(@WebParam(name = "playerID") String playerID, @WebParam(name="gameLobbyName") String gameLobbyName) throws Exception;
 	
 	@WebMethod
+	public void setGameLobbyName(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "gameLobbyName") String gameLobbyName);
+	
+	@WebMethod
+	public void setGameLobbyPassword(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "gameLobbyPassword") String gameLobbyPassword);
+	
+	@WebMethod
+	public void setPlayerLimit(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "playerLimit") int playerLimit);
+	
+	@WebMethod
+	public void kickPlayer(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "username") String username);
+	
+	@WebMethod
 	public GameLobby joinGameLobby(@WebParam(name="playerID") String playerID, @WebParam(name="GameLobbyID") String GameLobbyID) throws Exception;
 	
 	@WebMethod

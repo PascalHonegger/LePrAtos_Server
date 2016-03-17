@@ -3,6 +3,8 @@ package org.webservices;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import org.javaclasses.GameLobby;
@@ -134,13 +136,7 @@ public class GameManagerImpl implements GameManager
 			{
 				if (player.getUsername().equals(currentPlayer.getUsername())) 
 				{
-					gamelobby.getGamePlayerList().remove(player);
-					
-					if(gamelobby.getGameLobbyAdmin() == player)
-					{
-						gamelobby.setNewAdmin();
-					}
-					
+					gamelobby.leaveGameLobby(currentPlayer);
 					break;
 				}
 			}
@@ -166,6 +162,120 @@ public class GameManagerImpl implements GameManager
 		
 		return newLobby;
 	}
+	
+	public void setGameLobbyName(String playerID, String GameLobbyID, String gameLobbyName)
+	{
+		Player currentPlayer = null;
+		GameLobby currentGameLobby = null;
+		
+		for (Player player : info.getPlayerList())
+		{
+			if (player.getPlayerID().equals(playerID)) {
+				currentPlayer = player;
+				break;
+			}
+		}
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
+			}
+		}
+		
+		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
+		{
+			currentGameLobby.setGameLobbyName(gameLobbyName);
+		}
+	};
+	
+	public void setGameLobbyPassword(String playerID, String GameLobbyID, String gameLobbyPassword)
+	{
+		Player currentPlayer = null;
+		GameLobby currentGameLobby = null;
+		
+		for (Player player : info.getPlayerList())
+		{
+			if (player.getPlayerID().equals(playerID)) {
+				currentPlayer = player;
+				break;
+			}
+		}
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
+			}
+		}
+		
+		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
+		{
+			currentGameLobby.setGameLobbyPassword(gameLobbyPassword);
+		}
+	};
+	
+	public void setPlayerLimit(String playerID, String GameLobbyID, int playerLimit)
+	{
+		Player currentPlayer = null;
+		GameLobby currentGameLobby = null;
+		
+		for (Player player : info.getPlayerList())
+		{
+			if (player.getPlayerID().equals(playerID)) {
+				currentPlayer = player;
+				break;
+			}
+		}
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
+			}
+		}
+		
+		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
+		{
+			currentGameLobby.setPlayerLimit(playerLimit);
+		}
+	};
+	
+	public void kickPlayer(String playerID, String GameLobbyID, String username)
+	{
+		Player currentPlayer = null;
+		GameLobby currentGameLobby = null;
+		
+		for (Player player : info.getPlayerList())
+		{
+			if (player.getPlayerID().equals(playerID)) {
+				currentPlayer = player;
+				break;
+			}
+		}
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
+			}
+		}
+		
+		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
+		{
+			for (Player player : info.getPlayerList())
+			{
+				if (player.getUsername().equals(username)) 
+				{
+					currentGameLobby.getGamePlayerList().remove(player);
+				}	
+			}
+		}
+	};
 
 	public GameLobby joinGameLobby(String playerID, String GameLobbyID) throws Exception
 	{

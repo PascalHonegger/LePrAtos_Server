@@ -14,6 +14,9 @@ public class Player extends PlayerIdentification
 		this.playerID = UUID.randomUUID().toString();
 		this.email = email;
 		this.password = password;
+		
+//		MySQLConnection dbconnection = new MySQLConnection();
+//		dbconnection.createUser(username, email, password);
 	}
 	
 	public String getPlayerID()
