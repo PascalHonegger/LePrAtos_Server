@@ -11,7 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "joinGameLobby", namespace = "http://webservices.org/", propOrder = {
     "playerID",
-    "gameLobbyID"
+    "gameLobbyID",
+    "gameLobbyPassword"
 })
 public class JoinGameLobby {
 
@@ -19,6 +20,8 @@ public class JoinGameLobby {
     private String playerID;
     @XmlElement(name = "GameLobbyID", namespace = "")
     private String gameLobbyID;
+    @XmlElement(name = "gameLobbyPassword", namespace = "")
+    private String gameLobbyPassword;
 
     /**
      * 
@@ -54,6 +57,24 @@ public class JoinGameLobby {
      */
     public void setGameLobbyID(String gameLobbyID) {
         this.gameLobbyID = gameLobbyID;
+    }
+
+    /**
+     * 
+     * @return
+     *     returns String
+     */
+    public String getGameLobbyPassword() {
+        return this.gameLobbyPassword;
+    }
+
+    /**
+     * 
+     * @param gameLobbyPassword
+     *     the value for the gameLobbyPassword property
+     */
+    public void setGameLobbyPassword(String gameLobbyPassword) {
+        this.gameLobbyPassword = gameLobbyPassword;
     }
 
 }

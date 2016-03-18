@@ -29,6 +29,4 @@ public class PlayerIdentification
 	{
 		this.status = status;
 	}
-	
-	
 }

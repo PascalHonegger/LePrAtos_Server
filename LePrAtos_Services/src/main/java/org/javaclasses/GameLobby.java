@@ -8,12 +8,13 @@ import javax.xml.bind.ValidationException;
 
 public class GameLobby
 {
-	private PersistentInformation info;
+	private static PersistentInformation info;
 
 	private String gameLobbyID;
 	private String gameLobbyName;
+	private boolean passwordProtected;
 	private String gameLobbyPassword;
-	private int playerLimit = 10;
+	private int playerLimit;
 	private PlayerIdentification gameLobbyAdmin;
 	private ArrayList<PlayerIdentification> gamePlayerList = new ArrayList<PlayerIdentification>();
 	
@@ -26,9 +27,13 @@ public class GameLobby
 		gameLobbyAdmin = (PlayerIdentification)currentPlayer;
 		gameLobbyAdmin.setStatus(true);
 		this.gameLobbyName = gameLobbyName;
+		this.passwordProtected = false;
+		this.gameLobbyPassword = "";
+		this.playerLimit = 4;
 //		gamePlayerList.add((PlayerIdentification)currentPlayer);
 		info.getInactivePlayerList().remove(currentPlayer);
 		gameLobbyID = UUID.randomUUID().toString();
+		
 	}
 	
 	public GameLobby()
@@ -36,16 +41,23 @@ public class GameLobby
 		
 	}
 	
-	public void joinGameLobby(Player spieler) throws MyExceptions
+	public void joinGameLobby(Player spieler, String gameLobbyPassword) throws MyExceptions
 	{
-		if(gamePlayerList.stream().count() < (this.playerLimit - 1))
+		if("".equals(this.gameLobbyPassword) || this.gameLobbyPassword.equals(gameLobbyPassword))
 		{
-			gamePlayerList.add((PlayerIdentification)spieler);
-			info.getInactivePlayerList().remove(spieler);
+			if(gamePlayerList.stream().count() < (this.playerLimit - 1))
+			{
+				gamePlayerList.add((PlayerIdentification)spieler);
+				info.getInactivePlayerList().remove(spieler);
+			}
+			else
+			{
+				throw new MyExceptions("Lobby ist voll"); 
+			}
 		}
 		else
 		{
-			throw new MyExceptions("Lobby ist voll"); 
+			throw new MyExceptions("Lobby-Kennwort ist falsch");
 		}
 	}
 	
@@ -120,14 +132,10 @@ public class GameLobby
 		this.gamePlayerList = gamePlayerList;
 	}
 
-	public String getGameLobbyPassword()
-	{
-		return gameLobbyPassword;
-	}
-
-	public void setGameLobbyPassword(String gameLobbyPassword)
+	public void setGameLobbyPassword(String gameLobbyPassword) 
 	{
 		this.gameLobbyPassword = gameLobbyPassword;
+		this.passwordProtected = true;
 	}
 
 	public int getPlayerLimit()
@@ -138,6 +146,37 @@ public class GameLobby
 	public void setPlayerLimit(int playerLimit)
 	{
 		this.playerLimit = playerLimit;
+	}
+	
+	public boolean isPasswordProtected() {
+		return passwordProtected;
+	}
+
+	public void setPasswordProtected(boolean passwordProtected) {
+		this.passwordProtected = passwordProtected;
+	}
+	
+	public void resetGameLobbyPassword()
+	{
+		this.gameLobbyPassword = "";
+		this.passwordProtected = false;
+	}
+
+	public static GameLobby getGameLobbyByID(String GameLobbyID)
+	{
+		info = PersistentInformation.getInstance();
+		
+		GameLobby currentGameLobby = null;
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
+				currentGameLobby = gamelobby;
+				break;
+			}
+		}
+		
+		return currentGameLobby;
 	}
 	
 	

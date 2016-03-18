@@ -147,13 +147,7 @@ public class GameManagerImpl implements GameManager
 	{
 		Player currentPlayer = null;
 		
-			for (Player player : info.getInactivePlayerList())
-			{
-				if (player.getPlayerID().equals(playerID)) {
-					currentPlayer = player;
-					break;
-				}
-			}
+		currentPlayer = Player.getInactivePlayer(playerID);
 			
 		GameLobby newLobby = new GameLobby(currentPlayer, gameLobbyID);
 		
@@ -168,21 +162,8 @@ public class GameManagerImpl implements GameManager
 		Player currentPlayer = null;
 		GameLobby currentGameLobby = null;
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
-		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
 		{
@@ -195,21 +176,8 @@ public class GameManagerImpl implements GameManager
 		Player currentPlayer = null;
 		GameLobby currentGameLobby = null;
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
-		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
 		{
@@ -217,26 +185,27 @@ public class GameManagerImpl implements GameManager
 		}
 	};
 	
+	public void resetGameLobbyPassword(String playerID, String GameLobbyID)
+	{
+		Player currentPlayer = null;
+		GameLobby currentGameLobby = null;
+		
+		currentPlayer = Player.getPlayerByID(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
+		
+		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
+		{
+			currentGameLobby.resetGameLobbyPassword();
+		}
+	}
+	
 	public void setPlayerLimit(String playerID, String GameLobbyID, int playerLimit)
 	{
 		Player currentPlayer = null;
 		GameLobby currentGameLobby = null;
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
-		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
 		{
@@ -249,21 +218,8 @@ public class GameManagerImpl implements GameManager
 		Player currentPlayer = null;
 		GameLobby currentGameLobby = null;
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
-		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
 		{
@@ -277,28 +233,15 @@ public class GameManagerImpl implements GameManager
 		}
 	};
 
-	public GameLobby joinGameLobby(String playerID, String GameLobbyID) throws Exception
+	public GameLobby joinGameLobby(String playerID, String GameLobbyID, String gameLobbyPassword) throws Exception
 	{
 		Player currentPlayer = null;
 		GameLobby currentGameLobby = null;
 		
-		for (Player player : info.getInactivePlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
+		currentPlayer = Player.getInactivePlayer(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
-		
-		currentGameLobby.joinGameLobby(currentPlayer);
+		currentGameLobby.joinGameLobby(currentPlayer, gameLobbyPassword);
 		
 		return currentGameLobby;
 	}
@@ -308,23 +251,9 @@ public class GameManagerImpl implements GameManager
 		Player currentPlayer = null;
 		GameLobby currentGameLobby = null;
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
-		
-			
 		currentGameLobby.leaveGameLobby(currentPlayer);
 		
 		return;
@@ -335,21 +264,7 @@ public class GameManagerImpl implements GameManager
 		
 		GameLobby currentGameLobby = null;
 		
-//		for (int zaehler = 0; zaehler < gameLobbyList.size(); zaehler++)
-//		{
-//			if (gameLobbyList.get(zaehler).getGameLobbyID() == GameLobbyID)
-//			{
-//				return gameLobbyList.get(zaehler);
-//			}
-//		}
-		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			if (gamelobby.getGameLobbyID().equals(GameLobbyID)) {
-				currentGameLobby = gamelobby;
-				break;
-			}
-		}
+		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		return currentGameLobby;
 	}
@@ -370,13 +285,8 @@ public class GameManagerImpl implements GameManager
 	{
 		Player currentPlayer = null;
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) {
-				currentPlayer = player;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
+		
 		return currentPlayer;
 	}
 	
@@ -384,14 +294,7 @@ public class GameManagerImpl implements GameManager
 	{
 		Player currentPlayer = null;
 		
-		for (Player player : info.getPlayerList())
-		{	
-			if (player.getPlayerID().equals(playerID)) 
-			{
-				currentPlayer = player;
-				break;
-			}
-		}
+		currentPlayer = Player.getPlayerByID(playerID);
 		
 		currentPlayer.setStatus(status);
 		

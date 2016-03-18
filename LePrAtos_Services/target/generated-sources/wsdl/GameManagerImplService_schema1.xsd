@@ -29,6 +29,10 @@
 
   <xs:element name="joinGameLobbyResponse" type="tns:joinGameLobbyResponse"/>
 
+  <xs:element name="kickPlayer" type="tns:kickPlayer"/>
+
+  <xs:element name="kickPlayerResponse" type="tns:kickPlayerResponse"/>
+
   <xs:element name="leaveGameLobby" type="tns:leaveGameLobby"/>
 
   <xs:element name="leaveGameLobbyResponse" type="tns:leaveGameLobbyResponse"/>
@@ -45,6 +49,18 @@
 
   <xs:element name="registrationResponse" type="tns:registrationResponse"/>
 
+  <xs:element name="setGameLobbyName" type="tns:setGameLobbyName"/>
+
+  <xs:element name="setGameLobbyNameResponse" type="tns:setGameLobbyNameResponse"/>
+
+  <xs:element name="setGameLobbyPassword" type="tns:setGameLobbyPassword"/>
+
+  <xs:element name="setGameLobbyPasswordResponse" type="tns:setGameLobbyPasswordResponse"/>
+
+  <xs:element name="setPlayerLimit" type="tns:setPlayerLimit"/>
+
+  <xs:element name="setPlayerLimitResponse" type="tns:setPlayerLimitResponse"/>
+
   <xs:element name="setPlayerStatus" type="tns:setPlayerStatus"/>
 
   <xs:element name="setPlayerStatusResponse" type="tns:setPlayerStatusResponse"/>
@@ -52,17 +68,6 @@
   <xs:element name="username_availability" type="tns:username_availability"/>
 
   <xs:element name="username_availabilityResponse" type="tns:username_availabilityResponse"/>
-
-  <xs:complexType name="setPlayerStatus">
-    <xs:sequence>
-      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
-      <xs:element name="status" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="setPlayerStatusResponse">
-    <xs:sequence/>
-  </xs:complexType>
 
   <xs:complexType name="login">
     <xs:sequence>
@@ -126,20 +131,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="registration">
-    <xs:sequence>
-      <xs:element name="email" type="xs:string" minOccurs="0"/>
-      <xs:element name="username" type="xs:string" minOccurs="0"/>
-      <xs:element name="password" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="registrationResponse">
-    <xs:sequence>
-      <xs:element name="return" type="tns:player" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="leaveGameLobby">
     <xs:sequence>
       <xs:element name="playerID" type="xs:string" minOccurs="0"/>
@@ -155,6 +146,7 @@
     <xs:sequence>
       <xs:element name="playerID" type="xs:string" minOccurs="0"/>
       <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
+      <xs:element name="gameLobbyPassword" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -170,6 +162,8 @@
       <xs:element name="gameLobbyID" type="xs:string" minOccurs="0"/>
       <xs:element name="gameLobbyName" type="xs:string" minOccurs="0"/>
       <xs:element name="gamePlayerList" type="tns:playerIdentification" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="passwordProtected" type="xs:boolean"/>
+      <xs:element name="playerLimit" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -216,13 +210,64 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="logout">
+  <xs:complexType name="setPlayerStatus">
     <xs:sequence>
       <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+      <xs:element name="status" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="logoutResponse">
+  <xs:complexType name="setPlayerStatusResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="registration">
+    <xs:sequence>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="username" type="xs:string" minOccurs="0"/>
+      <xs:element name="password" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="registrationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:player" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setGameLobbyPassword">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+      <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
+      <xs:element name="gameLobbyPassword" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setGameLobbyPasswordResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="setGameLobbyName">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+      <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
+      <xs:element name="gameLobbyName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setGameLobbyNameResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="setPlayerLimit">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+      <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
+      <xs:element name="playerLimit" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setPlayerLimitResponse">
     <xs:sequence/>
   </xs:complexType>
 
@@ -234,6 +279,28 @@
     <xs:sequence>
       <xs:element name="return" type="tns:gameLobby" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="logout">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="logoutResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="kickPlayer">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+      <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
+      <xs:element name="username" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="kickPlayerResponse">
+    <xs:sequence/>
   </xs:complexType>
 </xs:schema>
 
