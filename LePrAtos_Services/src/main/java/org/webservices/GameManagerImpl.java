@@ -28,218 +28,89 @@ public class GameManagerImpl implements GameManager
 
 	public Player registration(String email, String username, String password)
 	{
-		Player spieler = new Player(email,username,password);
-		info.getInactivePlayerList().add(spieler);
-		info.getPlayerList().add(spieler);
-		
-		return spieler;
+		return Player.registration(email, username, password);
 	}
 	
 	public boolean username_availability(String username)
 	{
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getUsername().equals(username)) 
-			{
-				return false;
-			}
-		}
-		return true;
+		return Player.username_availability(username);
 	}
 	
 	public boolean email_verification(String email)
 	{
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getEmail().equals(email)) 
-			{
-				return false;
-			}
-		}
-		return true;
+		return Player.email_verification(email);
 	}
 	
 	public Player login(String username_email, String password) throws MyExceptions
 	{
-		boolean username_or_email = username_email.contains("@");
-		
-		if (username_or_email == true)
-		{	
-			for (Player player : info.getPlayerList())
-			{
-				if (player.getEmail().equals(username_email)) 
-				{
-					if (player.getPassword().equals(password))
-					{
-						return player;
-					}
-					else
-					{
-						throw new MyExceptions("Ungültiges Kennwort");
-					}
-				}	
-			}
-			
-			throw new MyExceptions("User nicht vorhanden");
-		}
-		
-		else
-		{
-			for (Player player : info.getPlayerList())
-			{
-				if (player.getUsername().equals(username_email)) 
-				{
-					if (player.getPassword().equals(password))
-					{
-						return player;
-					}
-					else
-					{
-						throw new MyExceptions("Ungültiges Kennwort");
-					}
-				}	
-			}
-			
-			throw new MyExceptions("User nicht vorhanden");
-		}
+		return Player.login(username_email, password);
 		
 	}
 
 	public void logout(String playerID)
 	{
-		Player currentPlayer = null;
+		Player currentPlayer = Player.getPlayerByID(playerID);
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) 
-			{
-				info.getPlayerList().remove(player);
-				currentPlayer = player;
-				break;
-			}
-		}
+		Player.removePlayerFromPlayerList(playerID);
+		Player.removePlayerFromInactivePlayerList(playerID);
 		
-		for (Player player : info.getInactivePlayerList())
-		{
-			if (player.getPlayerID().equals(playerID)) 
-			{
-				info.getInactivePlayerList().remove(player);
-				break;
-			}
-		}
+		GameLobby gameLobbyFromPlayer = GameLobby.getGameLobbyFromPlayer(currentPlayer);
 		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-//			GameLobby currentGameLobby = gamelobby;
-			
-			for (PlayerIdentification player : gamelobby.getGamePlayerList())
-			{
-				if (player.getUsername().equals(currentPlayer.getUsername())) 
-				{
-					gamelobby.leaveGameLobby(currentPlayer);
-					break;
-				}
-			}
-		}
+		gameLobbyFromPlayer.leaveGameLobby(currentPlayer);
 	}
 
-	public GameLobby createGameLobby(String playerID, String gameLobbyID) throws Exception
+	public GameLobby createGameLobby(String playerID, String gameLobbyName) throws Exception
 	{
-		Player currentPlayer = null;
-		
-		currentPlayer = Player.getInactivePlayer(playerID);
+		Player currentPlayer = Player.getInactivePlayer(playerID);
 			
-		GameLobby newLobby = new GameLobby(currentPlayer, gameLobbyID);
-		
-		info.getGameLobbyList().add(newLobby);
-		info.getInactivePlayerList().remove(currentPlayer);
-		
-		return newLobby;
+		return GameLobby.createGameLobby(currentPlayer, gameLobbyName);
 	}
 	
-	public void setGameLobbyName(String playerID, String GameLobbyID, String gameLobbyName)
+	public void setGameLobbyName(String playerID, String GameLobbyID, String gameLobbyName) throws MyExceptions
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
+		Player currentPlayer = Player.getPlayerByID(playerID);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		currentPlayer = Player.getPlayerByID(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
-		
-		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
-		{
-			currentGameLobby.setGameLobbyName(gameLobbyName);
-		}
+		currentGameLobby.setGameLobbyNameByPlayer(currentPlayer, gameLobbyName);
 	};
 	
-	public void setGameLobbyPassword(String playerID, String GameLobbyID, String gameLobbyPassword)
+	public void setGameLobbyPassword(String playerID, String GameLobbyID, String gameLobbyPassword) throws MyExceptions
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
+		Player currentPlayer = Player.getPlayerByID(playerID);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		currentPlayer = Player.getPlayerByID(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
-		
-		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
-		{
-			currentGameLobby.setGameLobbyPassword(gameLobbyPassword);
-		}
+		currentGameLobby.setGameLobbyPasswordByPlayer(currentPlayer, gameLobbyPassword);
 	};
 	
-	public void resetGameLobbyPassword(String playerID, String GameLobbyID)
+	public void resetGameLobbyPassword(String playerID, String GameLobbyID) throws MyExceptions
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
+		Player currentPlayer = Player.getPlayerByID(playerID);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		currentPlayer = Player.getPlayerByID(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
-		
-		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
-		{
-			currentGameLobby.resetGameLobbyPassword();
-		}
+		currentGameLobby.resetGameLobbyPasswordByPlayer(currentPlayer);
 	}
 	
-	public void setPlayerLimit(String playerID, String GameLobbyID, int playerLimit)
+	public void setPlayerLimit(String playerID, String GameLobbyID, int playerLimit) throws MyExceptions
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
+		Player currentPlayer = Player.getPlayerByID(playerID);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		currentPlayer = Player.getPlayerByID(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
-		
-		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
-		{
-			currentGameLobby.setPlayerLimit(playerLimit);
-		}
+		currentGameLobby.setPlayerLimitByPlayer(currentPlayer, playerLimit);
 	};
 	
 	public void kickPlayer(String playerID, String GameLobbyID, String username)
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
+		Player currentPlayer = Player.getPlayerByID(playerID);
+		Player otherPlayer = Player.getPlayerByUsername(username);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
-		currentPlayer = Player.getPlayerByID(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
-		
-		if(currentGameLobby.getGameLobbyAdmin() == currentPlayer)
-		{
-			for (Player player : info.getPlayerList())
-			{
-				if (player.getUsername().equals(username)) 
-				{
-					currentGameLobby.getGamePlayerList().remove(player);
-				}	
-			}
-		}
+		currentGameLobby.kickPlayer(currentPlayer, otherPlayer);
 	};
 
 	public GameLobby joinGameLobby(String playerID, String GameLobbyID, String gameLobbyPassword) throws Exception
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
-		
-		currentPlayer = Player.getInactivePlayer(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
+		Player currentPlayer = Player.getInactivePlayer(playerID);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		currentGameLobby.joinGameLobby(currentPlayer, gameLobbyPassword);
 		
@@ -248,11 +119,8 @@ public class GameManagerImpl implements GameManager
 	
 	public void leaveGameLobby(String playerID, String GameLobbyID)
 	{
-		Player currentPlayer = null;
-		GameLobby currentGameLobby = null;
-		
-		currentPlayer = Player.getPlayerByID(playerID);
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
+		Player currentPlayer = Player.getPlayerByID(playerID);
+		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
 		
 		currentGameLobby.leaveGameLobby(currentPlayer);
 		
@@ -261,42 +129,21 @@ public class GameManagerImpl implements GameManager
 
 	public GameLobby getGameLobby(String GameLobbyID)
 	{
-		
-		GameLobby currentGameLobby = null;
-		
-		currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
-		
-		return currentGameLobby;
+		return GameLobby.getGameLobbyByID(GameLobbyID);
 	}
 	
 	public List<GameLobby> getGameLobbies()
 	{
-		List<GameLobby> gameLobbies = new ArrayList<GameLobby>();
-		
-		for (GameLobby gamelobby : info.getGameLobbyList())
-		{
-			gameLobbies.add(gamelobby);
-		}
-		
-		return gameLobbies;
+		return GameLobby.getGameLobbies();
 	}
 	
 	public Player getPlayerByID(String playerID)
 	{
-		Player currentPlayer = null;
-		
-		currentPlayer = Player.getPlayerByID(playerID);
-		
-		return currentPlayer;
+		return Player.getPlayerByID(playerID);
 	}
 	
 	public void setPlayerStatus(String playerID, boolean status)
 	{
-		Player currentPlayer = null;
-		
-		currentPlayer = Player.getPlayerByID(playerID);
-		
-		currentPlayer.setStatus(status);
-		
+		Player.getPlayerByID(playerID).setStatus(status);
 	}
 }

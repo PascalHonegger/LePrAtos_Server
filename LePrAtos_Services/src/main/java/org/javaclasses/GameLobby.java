@@ -30,10 +30,8 @@ public class GameLobby
 		this.passwordProtected = false;
 		this.gameLobbyPassword = "";
 		this.playerLimit = 4;
-//		gamePlayerList.add((PlayerIdentification)currentPlayer);
-		info.getInactivePlayerList().remove(currentPlayer);
 		gameLobbyID = UUID.randomUUID().toString();
-		
+		info.getInactivePlayerList().remove(currentPlayer);	
 	}
 	
 	public GameLobby()
@@ -52,12 +50,12 @@ public class GameLobby
 			}
 			else
 			{
-				throw new MyExceptions("Lobby ist voll"); 
+				throw new MyExceptions("Lobby is full"); 
 			}
 		}
 		else
 		{
-			throw new MyExceptions("Lobby-Kennwort ist falsch");
+			throw new MyExceptions("Invalid lobby password");
 		}
 	}
 	
@@ -70,7 +68,7 @@ public class GameLobby
 		}
 		else
 		{
-			if(gameLobbyAdmin == spieler)
+			if(this.playerIsAdmin(spieler))
 			{
 				setNewAdmin();
 			}
@@ -90,6 +88,14 @@ public class GameLobby
 		gameLobbyAdmin = gamePlayerList.get(0);
 		this.gamePlayerList.remove(gameLobbyAdmin);
 		gameLobbyAdmin.setStatus(true);
+	}
+	
+	public void kickPlayer(Player spieler, Player spieler2)
+	{
+		if(this.playerIsAdmin(spieler))
+		{
+			this.getGamePlayerList().remove(spieler2);
+		}
 	}
 
 	public String getGameLobbyID()
@@ -116,6 +122,18 @@ public class GameLobby
 	{
 		this.gameLobbyName = gameLobbyName;
 	}
+	
+	public void setGameLobbyNameByPlayer(Player spieler, String gameLobbyName) throws MyExceptions
+	{
+		if(this.playerIsAdmin(spieler))
+		{
+			this.setGameLobbyName(gameLobbyName);
+		}
+		else
+		{
+			throw new MyExceptions("Access denied");
+		}
+	}
 
 	public void setGameLobbyAdmin(PlayerIdentification gameLobbyAdmin)
 	{
@@ -137,6 +155,18 @@ public class GameLobby
 		this.gameLobbyPassword = gameLobbyPassword;
 		this.passwordProtected = true;
 	}
+	
+	public void setGameLobbyPasswordByPlayer(Player spieler, String gameLobbyPassword) throws MyExceptions
+	{
+		if(this.playerIsAdmin(spieler))
+		{
+			this.setGameLobbyPassword(gameLobbyPassword);
+		}
+		else
+		{
+			throw new MyExceptions("Access denied");
+		}
+	}
 
 	public int getPlayerLimit()
 	{
@@ -146,6 +176,18 @@ public class GameLobby
 	public void setPlayerLimit(int playerLimit)
 	{
 		this.playerLimit = playerLimit;
+	}
+	
+	public void setPlayerLimitByPlayer(Player spieler, int playerLimit) throws MyExceptions
+	{
+		if(this.playerIsAdmin(spieler))
+		{
+			this.setPlayerLimit(playerLimit);
+		}
+		else
+		{
+			throw new MyExceptions("Access denied");
+		}
 	}
 	
 	public boolean isPasswordProtected() {
@@ -160,6 +202,18 @@ public class GameLobby
 	{
 		this.gameLobbyPassword = "";
 		this.passwordProtected = false;
+	}
+	
+	public void resetGameLobbyPasswordByPlayer(Player spieler) throws MyExceptions
+	{
+		if(this.playerIsAdmin(spieler))
+		{
+			this.resetGameLobbyPassword();
+		}
+		else
+		{
+			throw new MyExceptions("Access denied");
+		}
 	}
 
 	public static GameLobby getGameLobbyByID(String GameLobbyID)
@@ -177,6 +231,65 @@ public class GameLobby
 		}
 		
 		return currentGameLobby;
+	}
+	
+	public static GameLobby getGameLobbyFromPlayer(Player spieler)
+	{
+		info = PersistentInformation.getInstance();
+		
+		GameLobby currentGameLobby = null;
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			for (PlayerIdentification player : gamelobby.getGamePlayerList())
+			{
+				if (player.getUsername().equals(spieler.getUsername())) 
+				{
+					currentGameLobby = gamelobby;
+					break;
+				}
+			}
+		}
+		
+		return currentGameLobby;
+	}
+	
+	public static GameLobby createGameLobby(Player spieler, String gameLobbyName) throws Exception
+	{
+		info = PersistentInformation.getInstance();
+		
+		GameLobby newLobby = new GameLobby(spieler, gameLobbyName);
+		
+		info.getGameLobbyList().add(newLobby);
+		info.getInactivePlayerList().remove(spieler);
+		
+		return newLobby;
+	}
+	
+	public boolean playerIsAdmin(Player spieler)
+	{
+		if(this.getGameLobbyAdmin() == spieler)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public static List<GameLobby> getGameLobbies()
+	{
+		info = PersistentInformation.getInstance();
+		
+		List<GameLobby> gameLobbies = new ArrayList<GameLobby>();
+		
+		for (GameLobby gamelobby : info.getGameLobbyList())
+		{
+			gameLobbies.add(gamelobby);
+		}
+		
+		return gameLobbies;
 	}
 	
 	
