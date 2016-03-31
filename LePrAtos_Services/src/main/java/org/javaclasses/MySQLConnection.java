@@ -202,7 +202,7 @@ public class MySQLConnection
 				email = rs.getString(3);
 			}
 			
-				currentPlayer = new Player(playerID,username,email);
+				currentPlayer = new Player(playerID,email,username);
 		}
 		catch (SQLException e)
 		{
@@ -251,7 +251,7 @@ public class MySQLConnection
 				email = rs.getString(3);
 			}
 			
-				currentPlayer = new Player(playerID,username,email);
+				currentPlayer = new Player(playerID,email,username);
 		}
 		catch (SQLException e)
 		{

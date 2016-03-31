@@ -164,6 +164,7 @@ public class Player extends PlayerIdentification
 			
 			if(currentPlayer != null)
 			{
+				info.getInactivePlayerList().add(currentPlayer);
 				return currentPlayer;
 			}
 			else
@@ -179,6 +180,7 @@ public class Player extends PlayerIdentification
 			
 			if(currentPlayer != null)
 			{
+				info.getInactivePlayerList().add(currentPlayer);
 				return currentPlayer;
 			}
 			else
