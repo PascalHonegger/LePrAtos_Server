@@ -16,8 +16,8 @@ public class MySQLConnection
 	{
 		try
 		{
-			dataSource.setUser("root");
-			dataSource.setPassword("root");
+			dataSource.setUser("LePrAtos_User");
+			dataSource.setPassword("LePrAtos_Sicheres_Passort_2015");
 			dataSource.setURL("jdbc:mysql://localhost:3306/lepratos_db");
 			connection = dataSource.getConnection();
 		}
