@@ -26,7 +26,7 @@ public class GameManagerImpl implements GameManager
 	
 //	private static ArrayList<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
 
-	public Player registration(String email, String username, String password)
+	public Player registration(String email, String username, String password) throws MyExceptions
 	{
 		return Player.registration(email, username, password);
 	}

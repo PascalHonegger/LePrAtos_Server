@@ -14,7 +14,7 @@ import org.javaclasses.Player;
 public interface GameManager
 {
 	@WebMethod
-	public Player registration(@WebParam(name="email") String email, @WebParam(name="username") String username, @WebParam(name="password") String password);
+	public Player registration(@WebParam(name="email") String email, @WebParam(name="username") String username, @WebParam(name="password") String password) throws MyExceptions;
 	
 	@WebMethod
 	public boolean username_availability(@WebParam(name="username") String username);

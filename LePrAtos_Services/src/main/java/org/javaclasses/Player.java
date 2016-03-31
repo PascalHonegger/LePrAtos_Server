@@ -8,17 +8,19 @@ public class Player extends PlayerIdentification
 	
 	private String playerID;
 	private String email;
-	private String password;
 	
-	public Player(String email, String username, String password)
+	public Player(String email, String username)
 	{	
 		super(username);
 		this.playerID = UUID.randomUUID().toString();
 		this.email = email;
-		this.password = password;
-		
-//		MySQLConnection dbconnection = new MySQLConnection();
-//		dbconnection.createUser(username, email, password);
+	}
+	
+	public Player(String playerID, String email, String username)
+	{
+		super(username);
+		this.playerID = playerID;
+		this.email = email;
 	}
 	
 	public String getPlayerID()
@@ -39,16 +41,6 @@ public class Player extends PlayerIdentification
 	public void setEmail(String email)
 	{
 		this.email = email;
-	}
-
-	public String getPassword()
-	{
-		return password;
-	}
-
-	public void setPassword(String password)
-	{
-		this.password = password;
 	}
 	
 	public static Player getPlayerByID(String playerID)
@@ -105,39 +97,54 @@ public class Player extends PlayerIdentification
 	
 	public static boolean username_availability(String username)
 	{
-		info = PersistentInformation.getInstance();
+		MySQLConnection dbconnection = new MySQLConnection();
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getUsername().equals(username)) 
-			{
-				return false;
-			}
-		}
-		return true;
+		Boolean result = dbconnection.username_availability(username);
+		dbconnection.closeConnection();
+		
+		return result;
 	}
 	
 	public static boolean email_verification(String email)
 	{
-		info = PersistentInformation.getInstance();
+		MySQLConnection dbconnection = new MySQLConnection();
 		
-		for (Player player : info.getPlayerList())
-		{
-			if (player.getEmail().equals(email)) 
-			{
-				return false;
-			}
-		}
-		return true;
+		Boolean result = dbconnection.email_verification(email);
+		dbconnection.closeConnection();
+		
+		return result;
 	}
 	
-	public static Player registration(String email, String username, String password)
+	public static Player registration(String email, String username, String password) throws MyExceptions
 	{
 		info = PersistentInformation.getInstance();
 		
-		Player spieler = new Player(email,username,password);
-		info.getInactivePlayerList().add(spieler);
-		info.getPlayerList().add(spieler);
+		MySQLConnection dbconnection = new MySQLConnection();
+		
+		Player spieler = null;
+		
+		if(dbconnection.email_verification(email))
+		{
+			if(dbconnection.username_availability(username))
+			{
+				spieler = new Player(email,username);
+				
+				
+				dbconnection.createUser(spieler.playerID,username, email, password);
+				dbconnection.closeConnection();
+				
+				info.getInactivePlayerList().add(spieler);
+				info.getPlayerList().add(spieler);
+			}
+			else
+			{
+				throw new MyExceptions("Username bereits vergeben");
+			}
+		}
+		else
+		{
+			throw new MyExceptions("E-Mail wird bereits verwendet");
+		}
 		
 		return spieler;
 	}
@@ -146,46 +153,38 @@ public class Player extends PlayerIdentification
 	{
 		info = PersistentInformation.getInstance();
 		
+		Player currentPlayer = null;
+		
 		boolean username_or_email = username_email.contains("@");
 		
 		if (username_or_email == true)
 		{	
-			for (Player player : info.getPlayerList())
-			{
-				if (player.getEmail().equals(username_email)) 
-				{
-					if (player.getPassword().equals(password))
-					{
-						return player;
-					}
-					else
-					{
-						throw new MyExceptions("Invalid password");
-					}
-				}	
-			}
+			MySQLConnection dbconnection = new MySQLConnection();
+			currentPlayer = dbconnection.loadPlayerByEmail(username_email, password);
 			
-			throw new MyExceptions("User not found");
+			if(currentPlayer != null)
+			{
+				return currentPlayer;
+			}
+			else
+			{
+				throw new MyExceptions("Incorrect data");
+			}
 		}
 		
 		else
 		{
-			for (Player player : info.getPlayerList())
-			{
-				if (player.getUsername().equals(username_email)) 
-				{
-					if (player.getPassword().equals(password))
-					{
-						return player;
-					}
-					else
-					{
-						throw new MyExceptions("Invalid password");
-					}
-				}	
-			}
+			MySQLConnection dbconnection = new MySQLConnection();
+			currentPlayer = dbconnection.loadPlayerByUsername(username_email, password);
 			
-			throw new MyExceptions("User not found");
+			if(currentPlayer != null)
+			{
+				return currentPlayer;
+			}
+			else
+			{
+				throw new MyExceptions("Incorrect data");
+			}
 		}
 		
 	}
