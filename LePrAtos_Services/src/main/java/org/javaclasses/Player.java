@@ -43,7 +43,7 @@ public class Player extends PlayerIdentification
 		this.email = email;
 	}
 	
-	public static Player getPlayerByID(String playerID)
+	public static Player getPlayerByID(String playerID) throws MyExceptions
 	{
 		info = PersistentInformation.getInstance();
 		
@@ -57,8 +57,15 @@ public class Player extends PlayerIdentification
 				break;
 			}
 		}
-	
-		return currentPlayer;
+		
+		if(currentPlayer != null)
+		{
+			return currentPlayer;
+		}
+		else
+		{
+			throw new MyExceptions("Player not found");
+		}
 	}
 	
 	public static Player getPlayerByUsername(String username)
@@ -139,12 +146,12 @@ public class Player extends PlayerIdentification
 			}
 			else
 			{
-				throw new MyExceptions("Username bereits vergeben");
+				throw new MyExceptions("Username already taken");
 			}
 		}
 		else
 		{
-			throw new MyExceptions("E-Mail wird bereits verwendet");
+			throw new MyExceptions("Email address is already in use");
 		}
 		
 		return spieler;
@@ -160,54 +167,100 @@ public class Player extends PlayerIdentification
 		
 		if (username_or_email == true)
 		{	
-			MySQLConnection dbconnection = new MySQLConnection();
-			currentPlayer = dbconnection.loginPlayerByEmail(username_email, password);
+			for (Player player : info.getOnlinePlayerList())
+			{
+				if (player.getEmail().equals(username_email)) 
+				{
+					currentPlayer = player;
+					break;
+				}
+			}
 			
 			if(currentPlayer != null)
 			{
-				info.getOnlinePlayerList().add(currentPlayer);
-				info.getInactivePlayerList().add(currentPlayer);
-				
-				return currentPlayer;
+				throw new MyExceptions("Player already logged in");
 			}
 			else
 			{
-				throw new MyExceptions("Incorrect data");
+				MySQLConnection dbconnection = new MySQLConnection();
+				currentPlayer = dbconnection.loginPlayerByEmail(username_email, password);
+			
+				if(currentPlayer != null)
+				{
+					info.getOnlinePlayerList().add(currentPlayer);
+					info.getInactivePlayerList().add(currentPlayer);
+				
+					return currentPlayer;
+				}
+				else
+				{
+					throw new MyExceptions("Incorrect data");
+				}
 			}
 		}
 		
 		else
 		{
-			MySQLConnection dbconnection = new MySQLConnection();
-			currentPlayer = dbconnection.loginPlayerByUsername(username_email, password);
+			for (Player player : info.getOnlinePlayerList())
+			{
+				if (player.getUsername().equals(username_email)) 
+				{
+					currentPlayer = player;
+					break;
+				}
+			}
 			
 			if(currentPlayer != null)
 			{
-				info.getOnlinePlayerList().add(currentPlayer);
-				info.getInactivePlayerList().add(currentPlayer);
-				
-				return currentPlayer;
+				throw new MyExceptions("Player already logged in");
 			}
 			else
 			{
-				throw new MyExceptions("Incorrect data");
+				MySQLConnection dbconnection = new MySQLConnection();
+				currentPlayer = dbconnection.loginPlayerByUsername(username_email, password);
+			
+				if(currentPlayer != null)
+				{
+					info.getOnlinePlayerList().add(currentPlayer);
+					info.getInactivePlayerList().add(currentPlayer);
+				
+					return currentPlayer;
+				}
+				else
+				{
+					throw new MyExceptions("Incorrect data");
+				}
 			}
+		}
+	}
+	
+	public static void removePlayerFromInactivePlayerList(String playerID) throws MyExceptions
+	{
+		info = PersistentInformation.getInstance();
+	
+		try
+		{
+			info.getInactivePlayerList().remove(Player.getInactivePlayer(playerID));
+		}
+		catch (Exception e)
+		{
+			throw new MyExceptions("Cannot delete player");
 		}
 		
 	}
 	
-	public static void removePlayerFromInactivePlayerList(String playerID)
+	public static void removePlayerFromOnlinePlayerList(String playerID) throws MyExceptions
 	{
 		info = PersistentInformation.getInstance();
 	
-		info.getInactivePlayerList().remove(Player.getInactivePlayer(playerID));
-	}
-	
-	public static void removePlayerFromOnlinePlayerList(String playerID)
-	{
-		info = PersistentInformation.getInstance();
-	
-		info.getOnlinePlayerList().remove(Player.getPlayerByID(playerID));
+		try
+		{
+			info.getOnlinePlayerList().remove(Player.getPlayerByID(playerID));
+		}
+		catch (Exception e)
+		{
+			throw new MyExceptions("Cannot delete player");
+		}
 	}
 	
 	

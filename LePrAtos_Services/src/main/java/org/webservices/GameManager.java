@@ -50,17 +50,17 @@ public interface GameManager
 	public GameLobby joinGameLobby(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "gameLobbyPassword") String gameLobbyPassword) throws Exception;
 	
 	@WebMethod
-	public void leaveGameLobby(@WebParam(name="playerID") String playerID, @WebParam(name="GameLobbyID") String GameLobbyID);
+	public void leaveGameLobby(@WebParam(name="playerID") String playerID, @WebParam(name="GameLobbyID") String GameLobbyID) throws MyExceptions;
 	
 	@WebMethod
-	public GameLobby getGameLobby(@WebParam(name="GameLobbyID") String GameLobbyID);
+	public GameLobby getGameLobby(@WebParam(name="GameLobbyID") String GameLobbyID) throws MyExceptions;
 	
 	@WebMethod
 	public List<GameLobby> getGameLobbies();
 	
 	@WebMethod
-	public Player getPlayerByID(@WebParam(name="playerID") String playerID);
+	public Player getPlayerByID(@WebParam(name="playerID") String playerID) throws MyExceptions;
 	
 	@WebMethod
-	public void setPlayerStatus(@WebParam(name="playerID") String playerID, @WebParam(name="status") boolean status);
+	public void setPlayerStatus(@WebParam(name="playerID") String playerID, @WebParam(name="status") boolean status) throws MyExceptions;
 }

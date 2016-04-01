@@ -216,7 +216,7 @@ public class GameLobby
 		}
 	}
 
-	public static GameLobby getGameLobbyByID(String GameLobbyID)
+	public static GameLobby getGameLobbyByID(String GameLobbyID) throws MyExceptions
 	{
 		info = PersistentInformation.getInstance();
 		
@@ -230,7 +230,14 @@ public class GameLobby
 			}
 		}
 		
-		return currentGameLobby;
+		if(currentGameLobby != null)
+		{
+			return currentGameLobby;
+		}
+		else
+		{
+			throw new MyExceptions("Gamelobby not found");
+		}
 	}
 	
 	public static GameLobby getGameLobbyFromPlayer(Player spieler)
@@ -261,7 +268,15 @@ public class GameLobby
 		GameLobby newLobby = new GameLobby(spieler, gameLobbyName);
 		
 		info.getGameLobbyList().add(newLobby);
-		info.getInactivePlayerList().remove(spieler);
+		
+		try
+		{
+			info.getInactivePlayerList().remove(spieler);
+		}
+		catch (Exception e)
+		{
+			throw new MyExceptions("Cannot create gamelobby");
+		}
 		
 		return newLobby;
 	}

@@ -23,8 +23,6 @@ public class GameManagerImpl implements GameManager
 	{
 		info = PersistentInformation.getInstance();
 	}
-	
-//	private static ArrayList<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
 
 	public Player registration(String email, String username, String password) throws MyExceptions
 	{
@@ -118,7 +116,7 @@ public class GameManagerImpl implements GameManager
 		return currentGameLobby;
 	}
 	
-	public void leaveGameLobby(String playerID, String GameLobbyID)
+	public void leaveGameLobby(String playerID, String GameLobbyID) throws MyExceptions
 	{
 		Player currentPlayer = Player.getPlayerByID(playerID);
 		GameLobby currentGameLobby = GameLobby.getGameLobbyByID(GameLobbyID);
@@ -128,7 +126,7 @@ public class GameManagerImpl implements GameManager
 		return;
 	}
 
-	public GameLobby getGameLobby(String GameLobbyID)
+	public GameLobby getGameLobby(String GameLobbyID) throws MyExceptions
 	{
 		return GameLobby.getGameLobbyByID(GameLobbyID);
 	}
@@ -138,12 +136,12 @@ public class GameManagerImpl implements GameManager
 		return GameLobby.getGameLobbies();
 	}
 	
-	public Player getPlayerByID(String playerID)
+	public Player getPlayerByID(String playerID) throws MyExceptions
 	{
 		return Player.getPlayerByID(playerID);
 	}
 	
-	public void setPlayerStatus(String playerID, boolean status)
+	public void setPlayerStatus(String playerID, boolean status) throws MyExceptions
 	{
 		Player.getPlayerByID(playerID).setStatus(status);
 	}
