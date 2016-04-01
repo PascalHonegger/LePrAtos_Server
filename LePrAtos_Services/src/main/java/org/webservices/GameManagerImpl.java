@@ -47,16 +47,17 @@ public class GameManagerImpl implements GameManager
 		
 	}
 
-	public void logout(String playerID)
+	public void logout(String playerID) throws MyExceptions
 	{
 		Player currentPlayer = Player.getPlayerByID(playerID);
 		
-		Player.removePlayerFromPlayerList(playerID);
 		Player.removePlayerFromInactivePlayerList(playerID);
 		
 		GameLobby gameLobbyFromPlayer = GameLobby.getGameLobbyFromPlayer(currentPlayer);
 		
 		gameLobbyFromPlayer.leaveGameLobby(currentPlayer);
+		
+		Player.removePlayerFromOnlinePlayerList(playerID);
 	}
 
 	public GameLobby createGameLobby(String playerID, String gameLobbyName) throws Exception
@@ -98,7 +99,7 @@ public class GameManagerImpl implements GameManager
 		currentGameLobby.setPlayerLimitByPlayer(currentPlayer, playerLimit);
 	};
 	
-	public void kickPlayer(String playerID, String GameLobbyID, String username)
+	public void kickPlayer(String playerID, String GameLobbyID, String username) throws MyExceptions
 	{
 		Player currentPlayer = Player.getPlayerByID(playerID);
 		Player otherPlayer = Player.getPlayerByUsername(username);

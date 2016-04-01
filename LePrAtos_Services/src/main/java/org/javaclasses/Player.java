@@ -49,7 +49,7 @@ public class Player extends PlayerIdentification
 		
 		Player currentPlayer = null;
 		
-		for (Player player : info.getPlayerList())
+		for (Player player : info.getOnlinePlayerList())
 		{
 			if (player.getPlayerID().equals(playerID)) 
 			{
@@ -57,7 +57,7 @@ public class Player extends PlayerIdentification
 				break;
 			}
 		}
-		
+	
 		return currentPlayer;
 	}
 	
@@ -66,7 +66,7 @@ public class Player extends PlayerIdentification
 		info = PersistentInformation.getInstance();
 		Player currentPlayer = null;
 		
-		for (Player player : info.getPlayerList())
+		for (Player player : info.getOnlinePlayerList())
 		{
 			if (player.getUsername().equals(username)) 
 			{
@@ -76,6 +76,7 @@ public class Player extends PlayerIdentification
 		}
 		
 		return currentPlayer;
+	
 	}
 	
 	public static Player getInactivePlayer(String playerID)
@@ -133,8 +134,8 @@ public class Player extends PlayerIdentification
 				dbconnection.createUser(spieler.playerID,username, email, password);
 				dbconnection.closeConnection();
 				
+				info.getOnlinePlayerList().add(spieler);
 				info.getInactivePlayerList().add(spieler);
-				info.getPlayerList().add(spieler);
 			}
 			else
 			{
@@ -160,11 +161,13 @@ public class Player extends PlayerIdentification
 		if (username_or_email == true)
 		{	
 			MySQLConnection dbconnection = new MySQLConnection();
-			currentPlayer = dbconnection.loadPlayerByEmail(username_email, password);
+			currentPlayer = dbconnection.loginPlayerByEmail(username_email, password);
 			
 			if(currentPlayer != null)
 			{
+				info.getOnlinePlayerList().add(currentPlayer);
 				info.getInactivePlayerList().add(currentPlayer);
+				
 				return currentPlayer;
 			}
 			else
@@ -176,11 +179,13 @@ public class Player extends PlayerIdentification
 		else
 		{
 			MySQLConnection dbconnection = new MySQLConnection();
-			currentPlayer = dbconnection.loadPlayerByUsername(username_email, password);
+			currentPlayer = dbconnection.loginPlayerByUsername(username_email, password);
 			
 			if(currentPlayer != null)
 			{
+				info.getOnlinePlayerList().add(currentPlayer);
 				info.getInactivePlayerList().add(currentPlayer);
+				
 				return currentPlayer;
 			}
 			else
@@ -191,18 +196,20 @@ public class Player extends PlayerIdentification
 		
 	}
 	
-	public static void removePlayerFromPlayerList(String playerID)
-	{
-		info = PersistentInformation.getInstance();
-		
-		info.getPlayerList().remove(Player.getPlayerByID(playerID));
-	}
-	
 	public static void removePlayerFromInactivePlayerList(String playerID)
 	{
 		info = PersistentInformation.getInstance();
 	
 		info.getInactivePlayerList().remove(Player.getInactivePlayer(playerID));
 	}
+	
+	public static void removePlayerFromOnlinePlayerList(String playerID)
+	{
+		info = PersistentInformation.getInstance();
+	
+		info.getOnlinePlayerList().remove(Player.getPlayerByID(playerID));
+	}
+	
+	
 
 }

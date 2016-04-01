@@ -164,7 +164,7 @@ public class MySQLConnection
 		
 	}
 	
-	public Player loadPlayerByEmail(String email, String password)
+	public Player loginPlayerByEmail(String email, String password)
 	{
 		String query = "Select ID_User,username,mail from user where mail = ? and password = ?;";
 		
@@ -212,7 +212,7 @@ public class MySQLConnection
 		return currentPlayer;
 	}
 	
-	public Player loadPlayerByUsername(String username, String password)
+	public Player loginPlayerByUsername(String username, String password)
 	{
 		String query = "Select ID_User,username,mail from user where username = ? and password = ?;";
 		
@@ -260,6 +260,10 @@ public class MySQLConnection
 		
 		return currentPlayer;
 	}
+	
+	
+	
+	
 }	
 
 	

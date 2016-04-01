@@ -8,8 +8,10 @@ public class PersistentInformation
 
 	private static PersistentInformation instance;
 	
-	public static PersistentInformation getInstance() {
-		if (instance == null) {
+	public static PersistentInformation getInstance() 
+	{
+		if (instance == null) 
+		{
 			instance = new PersistentInformation();
 		}
 		return instance;
@@ -19,12 +21,23 @@ public class PersistentInformation
 	{
 	}
 	
+	private List<Player> onlinePlayerList = new ArrayList<Player>();
 	private List<Player> inactivePlayerList = new ArrayList<Player>();
-	private List<Player> playerList = new ArrayList<Player>();
 	private List<GameLobby> gameLobbyList = new ArrayList<GameLobby>();
 	
-	public List<GameLobby> getGameLobbyList() {
+	public List<GameLobby> getGameLobbyList() 
+	{
 		return gameLobbyList;
+	}
+
+	public List<Player> getOnlinePlayerList() 
+	{
+		return onlinePlayerList;
+	}
+
+	public void setOnlinePlayerList(List<Player> onlinePlayerList) 
+	{
+		this.onlinePlayerList = onlinePlayerList;
 	}
 
 	public List<Player> getInactivePlayerList()
@@ -36,17 +49,7 @@ public class PersistentInformation
 	{
 		this.inactivePlayerList = inactivePlayer;
 	}
-
-	public List<Player> getPlayerList()
-	{
-		return playerList;
-	}
-
-	public void setPlayerList(List<Player> playerList)
-	{
-		this.playerList = playerList;
-	}
-
+	
 	public void setGameLobbyList(List<GameLobby> gameLobbyList)
 	{
 		this.gameLobbyList = gameLobbyList;

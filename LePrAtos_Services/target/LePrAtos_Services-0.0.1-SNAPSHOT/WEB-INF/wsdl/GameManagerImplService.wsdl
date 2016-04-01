@@ -164,6 +164,7 @@
     <operation name="logout">
       <input wsam:Action="http://webservices.org/GameManager/logoutRequest" message="tns:logout"/>
       <output wsam:Action="http://webservices.org/GameManager/logoutResponse" message="tns:logoutResponse"/>
+      <fault message="tns:MyExceptions" name="MyExceptions" wsam:Action="http://webservices.org/GameManager/logout/Fault/MyExceptions"/>
     </operation>
     <operation name="setPlayerLimit">
       <input wsam:Action="http://webservices.org/GameManager/setPlayerLimitRequest" message="tns:setPlayerLimit"/>
@@ -173,6 +174,7 @@
     <operation name="kickPlayer">
       <input wsam:Action="http://webservices.org/GameManager/kickPlayerRequest" message="tns:kickPlayer"/>
       <output wsam:Action="http://webservices.org/GameManager/kickPlayerResponse" message="tns:kickPlayerResponse"/>
+      <fault message="tns:MyExceptions" name="MyExceptions" wsam:Action="http://webservices.org/GameManager/kickPlayer/Fault/MyExceptions"/>
     </operation>
     <operation name="joinGameLobby">
       <input wsam:Action="http://webservices.org/GameManager/joinGameLobbyRequest" message="tns:joinGameLobby"/>
@@ -310,6 +312,9 @@
       <output>
         <soap:body use="literal"/>
       </output>
+      <fault name="MyExceptions">
+        <soap:fault name="MyExceptions" use="literal"/>
+      </fault>
     </operation>
     <operation name="setPlayerLimit">
       <soap:operation soapAction=""/>
@@ -331,6 +336,9 @@
       <output>
         <soap:body use="literal"/>
       </output>
+      <fault name="MyExceptions">
+        <soap:fault name="MyExceptions" use="literal"/>
+      </fault>
     </operation>
     <operation name="joinGameLobby">
       <soap:operation soapAction=""/>

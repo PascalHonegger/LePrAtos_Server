@@ -26,7 +26,7 @@ public interface GameManager
 	public Player login(@WebParam(name="username_email") String username, @WebParam(name="password") String password) throws MyExceptions;
 	
 	@WebMethod
-	public void logout(@WebParam(name="playerID") String playerID);
+	public void logout(@WebParam(name="playerID") String playerID) throws MyExceptions;
 	
 	@WebMethod
 	public GameLobby createGameLobby(@WebParam(name = "playerID") String playerID, @WebParam(name="gameLobbyName") String gameLobbyName) throws Exception;
@@ -44,7 +44,7 @@ public interface GameManager
 	public void setPlayerLimit(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "playerLimit") int playerLimit) throws MyExceptions;
 	
 	@WebMethod
-	public void kickPlayer(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "username") String username);
+	public void kickPlayer(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "username") String username) throws MyExceptions;
 	
 	@WebMethod
 	public GameLobby joinGameLobby(@WebParam(name = "playerID") String playerID, @WebParam(name = "GameLobbyID") String GameLobbyID, @WebParam(name = "gameLobbyPassword") String gameLobbyPassword) throws Exception;
