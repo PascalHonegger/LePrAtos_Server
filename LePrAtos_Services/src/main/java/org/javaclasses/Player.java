@@ -2,8 +2,15 @@ package org.javaclasses;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import org.apache.log4j.Logger;
+
 public class Player extends PlayerIdentification
 {
+	final static Logger logger = Logger.getLogger(Player.class);
+	
 	private static PersistentInformation info;
 	
 	private String playerID;
@@ -64,7 +71,10 @@ public class Player extends PlayerIdentification
 		}
 		else
 		{
-			throw new MyExceptions("Player not found");
+			MyExceptions newException = new MyExceptions("Player not found");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 	
@@ -146,12 +156,18 @@ public class Player extends PlayerIdentification
 			}
 			else
 			{
-				throw new MyExceptions("Username already taken");
+				MyExceptions newException = new MyExceptions("RegisterView_BadRegister"); //Username already taken
+				PropertyConfigurator.configure("log4j.properties");
+				logger.error("An error has occurred!", newException);
+				throw newException;
 			}
 		}
 		else
 		{
-			throw new MyExceptions("Email address is already in use");
+			MyExceptions newException = new MyExceptions("RegisterView_BadRegister"); //Email address is already in use
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 		
 		return spieler;
@@ -178,7 +194,10 @@ public class Player extends PlayerIdentification
 			
 			if(currentPlayer != null)
 			{
-				throw new MyExceptions("Player already logged in");
+				MyExceptions newException = new MyExceptions("LoginView_AlreadyLoggedIn");
+				PropertyConfigurator.configure("log4j.properties");
+				logger.error("An error has occurred!", newException);
+				throw newException;
 			}
 			else
 			{
@@ -193,8 +212,11 @@ public class Player extends PlayerIdentification
 					return currentPlayer;
 				}
 				else
-				{
-					throw new MyExceptions("Incorrect data");
+				{	
+					MyExceptions newException = new MyExceptions("LoginView_BadLogin");
+					PropertyConfigurator.configure("log4j.properties");
+					logger.error("An error has occurred!", newException);
+					throw newException;
 				}
 			}
 		}
@@ -212,7 +234,10 @@ public class Player extends PlayerIdentification
 			
 			if(currentPlayer != null)
 			{
-				throw new MyExceptions("Player already logged in");
+				MyExceptions newException = new MyExceptions("LoginView_AlreadyLoggedIn");
+				PropertyConfigurator.configure("log4j.properties");
+				logger.error("An error has occurred!", newException);
+				throw newException;
 			}
 			else
 			{
@@ -228,7 +253,10 @@ public class Player extends PlayerIdentification
 				}
 				else
 				{
-					throw new MyExceptions("Incorrect data");
+					MyExceptions newException = new MyExceptions("LoginView_BadLogin");
+					PropertyConfigurator.configure("log4j.properties");
+					logger.error("An error has occurred!", newException);
+					throw newException;
 				}
 			}
 		}
@@ -244,7 +272,10 @@ public class Player extends PlayerIdentification
 		}
 		catch (Exception e)
 		{
-			throw new MyExceptions("Cannot delete player");
+			MyExceptions newException = new MyExceptions("Cannot delete player");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 		
 	}
@@ -259,7 +290,10 @@ public class Player extends PlayerIdentification
 		}
 		catch (Exception e)
 		{
-			throw new MyExceptions("Cannot delete player");
+			MyExceptions newException = new MyExceptions("Cannot delete player");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 	

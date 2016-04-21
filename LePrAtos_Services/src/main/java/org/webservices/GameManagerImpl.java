@@ -42,18 +42,27 @@ public class GameManagerImpl implements GameManager
 	public Player login(String username_email, String password) throws MyExceptions
 	{
 		return Player.login(username_email, password);
-		
 	}
 
 	public void logout(String playerID) throws MyExceptions
 	{
 		Player currentPlayer = Player.getPlayerByID(playerID);
 		
-		Player.removePlayerFromInactivePlayerList(playerID);
+		try
+		{
+			Player.removePlayerFromInactivePlayerList(playerID);
+		}
+		catch(Exception e)
+		{
+			
+		}
 		
 		GameLobby gameLobbyFromPlayer = GameLobby.getGameLobbyFromPlayer(currentPlayer);
 		
-		gameLobbyFromPlayer.leaveGameLobby(currentPlayer);
+		if(gameLobbyFromPlayer != null)
+		{
+			gameLobbyFromPlayer.leaveGameLobby(currentPlayer);
+		}
 		
 		Player.removePlayerFromOnlinePlayerList(playerID);
 	}

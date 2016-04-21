@@ -5,10 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class MySQLConnection
 {
+	final static Logger logger = Logger.getLogger(MySQLConnection.class);
+	
 	MysqlDataSource dataSource = new MysqlDataSource();
 	Connection connection = null;
 	
@@ -23,7 +27,8 @@ public class MySQLConnection
 		}
 		catch (SQLException e)
 		{
-			 throw new IllegalStateException("Cannot connect to database!", e);
+			logger.error("An error has occurred!", e);
+			throw new IllegalStateException("Cannot connect to database!", e);
 		}
 	}
 	
@@ -35,6 +40,7 @@ public class MySQLConnection
 		} 
 		catch (SQLException e) 
 		{
+			logger.error("An error has occurred!", e);
 			e.printStackTrace();
 		}
 	}
@@ -47,6 +53,7 @@ public class MySQLConnection
 		}
 		catch (SQLException e) 
 		{
+			logger.error("An error has occurred!", e);
 		    throw new IllegalStateException("Cannot execute update!", e);
 		}	
 	}
@@ -61,6 +68,7 @@ public class MySQLConnection
 		}
 		catch (SQLException e) 
 		{
+			logger.error("An error has occurred!", e);
 		    throw new IllegalStateException("Cannot execute update!", e);
 		}	
 		
@@ -84,6 +92,7 @@ public class MySQLConnection
 		}
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Cannot create Statement!", e);
 		}
 		
@@ -105,6 +114,7 @@ public class MySQLConnection
 		
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Cannot create Statement!", e);
 		}
 		
@@ -122,6 +132,7 @@ public class MySQLConnection
 		
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Irgend en Error", e);
 		}
 	}
@@ -141,6 +152,7 @@ public class MySQLConnection
 		
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Cannot create Statement!", e);
 		}
 		
@@ -158,6 +170,7 @@ public class MySQLConnection
 		
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Irgend en Error", e);
 		}
 		
@@ -186,6 +199,7 @@ public class MySQLConnection
 		
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Cannot create Statement!", e);
 		}
 		
@@ -206,6 +220,7 @@ public class MySQLConnection
 		}
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("It doesn't work :/", e);
 		}
 		
@@ -234,6 +249,7 @@ public class MySQLConnection
 		
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Cannot create Statement!", e);
 		}
 		
@@ -255,6 +271,7 @@ public class MySQLConnection
 		}
 		catch (SQLException e)
 		{
+			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("It doesn't work :/", e);
 		}
 		

@@ -1,7 +1,9 @@
 org\javaclasses\Player.class
 org\javaclasses\GameLobby.class
-org\javaclasses\PlayerIdentification.class
 org\webservices\GameManagerImpl.class
+org\javaclasses\PlayerIdentification.class
 org\javaclasses\MyAssert.class
 org\webservices\GameManager.class
+org\javaclasses\MyExceptions.class
+org\javaclasses\MySQLConnection.class
 org\javaclasses\PersistentInformation.class

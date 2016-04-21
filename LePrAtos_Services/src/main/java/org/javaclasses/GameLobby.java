@@ -6,8 +6,13 @@ import java.util.UUID;
 
 import javax.xml.bind.ValidationException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 public class GameLobby
 {
+	final static Logger logger = Logger.getLogger(GameLobby.class);
+	
 	private static PersistentInformation info;
 
 	private String gameLobbyID;
@@ -50,12 +55,18 @@ public class GameLobby
 			}
 			else
 			{
-				throw new MyExceptions("Lobby is full"); 
+				MyExceptions newException = new MyExceptions("LobbyBrowser_JoinFullLobby");
+				PropertyConfigurator.configure("log4j.properties");
+				logger.error("An error has occurred!", newException);
+				throw newException;
 			}
 		}
 		else
 		{
-			throw new MyExceptions("Invalid lobby password");
+			MyExceptions newException = new MyExceptions("LobbyBrowser_WrongLobbyPassword");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 	
@@ -131,7 +142,10 @@ public class GameLobby
 		}
 		else
 		{
-			throw new MyExceptions("Access denied");
+			MyExceptions newException = new MyExceptions("NoPermissions");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 
@@ -164,7 +178,10 @@ public class GameLobby
 		}
 		else
 		{
-			throw new MyExceptions("Access denied");
+			MyExceptions newException = new MyExceptions("NoPermissions");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 
@@ -186,7 +203,10 @@ public class GameLobby
 		}
 		else
 		{
-			throw new MyExceptions("Access denied");
+			MyExceptions newException = new MyExceptions("NoPermissions");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 	
@@ -212,7 +232,10 @@ public class GameLobby
 		}
 		else
 		{
-			throw new MyExceptions("Access denied");
+			MyExceptions newException = new MyExceptions("NoPermissions");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 
@@ -236,7 +259,10 @@ public class GameLobby
 		}
 		else
 		{
-			throw new MyExceptions("Gamelobby not found");
+			MyExceptions newException = new MyExceptions("Gamelobby not found");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 	}
 	
@@ -275,7 +301,10 @@ public class GameLobby
 		}
 		catch (Exception e)
 		{
-			throw new MyExceptions("Cannot create gamelobby");
+			MyExceptions newException = new MyExceptions("Cannot create gamelobby");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
 		}
 		
 		return newLobby;
