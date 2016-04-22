@@ -296,6 +296,10 @@ public class Player extends PlayerIdentification
 			throw newException;
 		}
 	}
+
+	public static String getPasswordFromEmail(String email) {
+		return new MySQLConnection().getUserPasswordFromEmail(email);
+	}
 	
 	
 

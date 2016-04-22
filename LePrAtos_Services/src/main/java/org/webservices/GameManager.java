@@ -63,4 +63,10 @@ public interface GameManager
 	
 	@WebMethod
 	public void setPlayerStatus(@WebParam(name="playerID") String playerID, @WebParam(name="status") boolean status) throws MyExceptions;
+
+	@WebMethod
+	public String requestPasswordReset(@WebParam(name="mail") String mail) throws MyExceptions;
+
+	@WebMethod
+	public void setPasswordFromReset(@WebParam(name="mail") String mail, @WebParam(name="currentPassword") String currentPassword, @WebParam(name="newPassword") String newPassword) throws MyExceptions;
 }

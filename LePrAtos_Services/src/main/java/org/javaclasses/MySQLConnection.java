@@ -94,9 +94,29 @@ public class MySQLConnection
 		{
 			logger.error("An error has occurred!", e);
 			throw new IllegalStateException("Cannot create Statement!", e);
+		}		
+	}
+	
+	public String getUserPasswordFromEmail(String email)
+	{
+		String query = "Select password from user where email = ? limit 1";
+		
+		try
+		{
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, email);
+			
+			ResultSet result = this.readFromDatabase(ps);
+			
+			//result.next();
+			
+			return result.getString(0);
 		}
-		
-		
+		catch (SQLException e)
+		{
+			logger.error("An error has occurred!", e);
+			throw new IllegalStateException("Cannot create Statement!", e);
+		}		
 	}
 	
 	public boolean username_availability(String username)
@@ -276,11 +296,5 @@ public class MySQLConnection
 		}
 		
 		return currentPlayer;
-	}
-	
-	
-	
-	
+	}	
 }	
-
-	

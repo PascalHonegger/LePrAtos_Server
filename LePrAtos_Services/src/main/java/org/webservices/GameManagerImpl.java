@@ -154,4 +154,15 @@ public class GameManagerImpl implements GameManager
 	{
 		Player.getPlayerByID(playerID).setStatus(status);
 	}
+
+	@Override
+	public String requestPasswordReset(String email) throws MyExceptions {
+		return Player.getPasswordFromEmail(email);
+	}
+
+	@Override
+	public void setPasswordFromReset(String mail, String currentPassword, String newPassword) throws MyExceptions {
+		// TODO Auto-generated method stub
+		
+	}
 }
