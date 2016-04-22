@@ -49,6 +49,10 @@
 
   <xs:element name="registrationResponse" type="tns:registrationResponse"/>
 
+  <xs:element name="requestPasswordReset" type="tns:requestPasswordReset"/>
+
+  <xs:element name="requestPasswordResetResponse" type="tns:requestPasswordResetResponse"/>
+
   <xs:element name="resetGameLobbyPassword" type="tns:resetGameLobbyPassword"/>
 
   <xs:element name="resetGameLobbyPasswordResponse" type="tns:resetGameLobbyPasswordResponse"/>
@@ -60,6 +64,10 @@
   <xs:element name="setGameLobbyPassword" type="tns:setGameLobbyPassword"/>
 
   <xs:element name="setGameLobbyPasswordResponse" type="tns:setGameLobbyPasswordResponse"/>
+
+  <xs:element name="setPasswordFromReset" type="tns:setPasswordFromReset"/>
+
+  <xs:element name="setPasswordFromResetResponse" type="tns:setPasswordFromResetResponse"/>
 
   <xs:element name="setPlayerLimit" type="tns:setPlayerLimit"/>
 
@@ -110,18 +118,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="getPlayerByID">
-    <xs:sequence>
-      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getPlayerByIDResponse">
-    <xs:sequence>
-      <xs:element name="return" type="tns:player" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="username_availability">
     <xs:sequence>
       <xs:element name="username" type="xs:string" minOccurs="0"/>
@@ -131,6 +127,18 @@
   <xs:complexType name="username_availabilityResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPlayerByID">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPlayerByIDResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:player" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -176,6 +184,18 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="email_verification">
+    <xs:sequence>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="email_verificationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="getGameLobby">
     <xs:sequence>
       <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
@@ -188,16 +208,16 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="email_verification">
+  <xs:complexType name="setPasswordFromReset">
     <xs:sequence>
-      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="mail" type="xs:string" minOccurs="0"/>
+      <xs:element name="currentPassword" type="xs:string" minOccurs="0"/>
+      <xs:element name="newPassword" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="email_verificationResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean"/>
-    </xs:sequence>
+  <xs:complexType name="setPasswordFromResetResponse">
+    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="createGameLobby">
@@ -224,6 +244,18 @@
     <xs:sequence/>
   </xs:complexType>
 
+  <xs:complexType name="requestPasswordReset">
+    <xs:sequence>
+      <xs:element name="mail" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="requestPasswordResetResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="resetGameLobbyPassword">
     <xs:sequence>
       <xs:element name="playerID" type="xs:string" minOccurs="0"/>
@@ -232,6 +264,18 @@
   </xs:complexType>
 
   <xs:complexType name="resetGameLobbyPasswordResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="setGameLobbyPassword">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+      <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
+      <xs:element name="gameLobbyPassword" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setGameLobbyPasswordResponse">
     <xs:sequence/>
   </xs:complexType>
 
@@ -247,18 +291,6 @@
     <xs:sequence>
       <xs:element name="return" type="tns:player" minOccurs="0"/>
     </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="setGameLobbyPassword">
-    <xs:sequence>
-      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
-      <xs:element name="GameLobbyID" type="xs:string" minOccurs="0"/>
-      <xs:element name="gameLobbyPassword" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="setGameLobbyPasswordResponse">
-    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="setGameLobbyName">
@@ -285,16 +317,6 @@
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="logout">
-    <xs:sequence>
-      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="logoutResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="getGameLobbies">
     <xs:sequence/>
   </xs:complexType>
@@ -303,6 +325,16 @@
     <xs:sequence>
       <xs:element name="return" type="tns:gameLobby" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="logout">
+    <xs:sequence>
+      <xs:element name="playerID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="logoutResponse">
+    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="kickPlayer">

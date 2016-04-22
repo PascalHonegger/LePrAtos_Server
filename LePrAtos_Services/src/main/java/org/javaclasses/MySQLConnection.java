@@ -99,7 +99,7 @@ public class MySQLConnection
 	
 	public String getUserPasswordFromEmail(String email)
 	{
-		String query = "Select password from user where email = ? limit 1";
+		String query = "Select password from user where mail = ?";
 		
 		try
 		{
@@ -108,9 +108,9 @@ public class MySQLConnection
 			
 			ResultSet result = this.readFromDatabase(ps);
 			
-			//result.next();
+			result.next();
 			
-			return result.getString(0);
+			return result.getString(1);
 		}
 		catch (SQLException e)
 		{
