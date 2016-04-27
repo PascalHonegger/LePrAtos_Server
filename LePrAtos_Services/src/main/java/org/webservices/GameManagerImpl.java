@@ -162,6 +162,6 @@ public class GameManagerImpl implements GameManager
 
 	public void setPasswordFromReset(String mail, String currentPassword, String newPassword) throws MyExceptions 
 	{
-	
+		Player.setPasswordFromReset(mail,currentPassword,newPassword);
 	}
 }

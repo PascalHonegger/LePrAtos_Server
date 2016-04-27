@@ -297,8 +297,24 @@ public class Player extends PlayerIdentification
 		}
 	}
 
-	public static String getPasswordFromEmail(String email) {
+	public static String getPasswordFromEmail(String email) 
+	{
 		return new MySQLConnection().getUserPasswordFromEmail(email);
+	}
+	
+	public static void setPasswordFromReset(String mail, String currentPassword, String newPassword) throws MyExceptions
+	{
+		if(new MySQLConnection().checkUserPasswordByEmail(mail, currentPassword))
+		{
+			new MySQLConnection().setNewUserPassword(mail,newPassword);
+		}
+		else
+		{
+			MyExceptions newException = new MyExceptions("Cannot set new password");
+			PropertyConfigurator.configure("log4j.properties");
+			logger.error("An error has occurred!", newException);
+			throw newException;
+		}
 	}
 	
 	

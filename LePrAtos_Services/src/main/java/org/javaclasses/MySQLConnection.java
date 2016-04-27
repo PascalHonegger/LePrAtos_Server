@@ -247,6 +247,56 @@ public class MySQLConnection
 		return currentPlayer;
 	}
 	
+	public boolean checkUserPasswordByEmail(String email, String password)
+	{
+		String query = "Select ID_User,username,mail from user where mail = ? and password = ?;";
+		
+		Boolean passwordCorrect;
+		
+		String playerID = null;
+		String username = null;
+		
+		ResultSet rs = null;
+		
+		try
+		{
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, email);
+			ps.setString(2, password);
+		
+			rs = this.readFromDatabase(ps);
+		}
+		
+		catch (SQLException e)
+		{
+			logger.error("An error has occurred!", e);
+			throw new IllegalStateException("Cannot create Statement!", e);
+		}
+		
+		try
+		{
+			if(!rs.next())
+			{
+				return false;	
+			}
+			else
+			{
+				playerID = rs.getString(1);
+				username = rs.getString(2);
+				email = rs.getString(3);
+			}
+			
+				passwordCorrect = true;
+		}
+		catch (SQLException e)
+		{
+			logger.error("An error has occurred!", e);
+			throw new IllegalStateException("It doesn't work :/", e);
+		}
+		
+		return passwordCorrect;
+	}
+	
 	public Player loginPlayerByUsername(String username, String password)
 	{
 		String query = "Select ID_User,username,mail from user where username = ? and password = ?;";
@@ -296,5 +346,25 @@ public class MySQLConnection
 		}
 		
 		return currentPlayer;
-	}	
+	}
+	
+	public void setNewUserPassword(String mail, String newPassword)
+	{
+		String query = "Update user Set password = ? Where mail = ?";
+		
+		try
+		{
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, newPassword);
+			ps.setString(2, mail);
+			
+			this.writeToDatabase(ps);
+			
+		}
+		catch (SQLException e)
+		{
+			logger.error("An error has occurred!", e);
+			throw new IllegalStateException("Cannot create Statement!", e);
+		}		
+	}
 }	
